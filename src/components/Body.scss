@@ -1,0 +1,145 @@
+.Body{
+    display: block;
+    display: -webkit-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    word-wrap: break-word;
+    -webkit-box-orient: vertical;
+    font-size: 16px;
+    width: 100%;
+    font-weight: 400;
+    letter-spacing: 0em;
+    color: var(--neutral0);
+    font-family: sans-serif;
+    white-space: pre-line;
+
+    &.disabled{
+        color: var(--body-disabled);
+    }
+
+    &.uppercase{
+        text-transform: uppercase;
+    }
+
+    &.underline{
+        text-decoration: underline;
+    }
+
+    &.line{
+        white-space: nowrap;
+    }
+
+    &.boxSizing{
+        width: 100%;
+    }
+
+    &.small{
+        font-size: 14px;
+    }
+
+    &.large{
+        font-size: 18px;
+    }
+
+    &.hover{
+        transition: all .2s;
+    }
+
+    &.white{
+        color: var(--neutral800);
+
+        &.hover{
+            &:hover{
+                color: var(--neutral800);
+            }
+        }
+    }
+
+    &.primary{
+        color: var(--primary);
+
+        &.hover{
+            &:hover{
+                color: var(--primary-hover);
+            }
+        }
+    }
+
+    &.error{
+        color: var(--red);
+    }
+
+    &.success{
+        color: var(--green);
+    }
+
+    &.justify{
+        text-align: justify;
+        justify-content: baseline;
+    }
+
+    &.center{
+        text-align: center;
+    }
+
+    &.thin{
+        font-weight: 100;
+    }
+
+    &.extraLight{
+        font-weight: 200;
+    }
+
+    &.light{
+        font-weight: 300;
+    }
+
+    &.medium{
+        font-weight: 400;
+    }
+
+    &.regular{
+        font-weight: 500;
+    }
+
+    &.semiBold{
+        font-weight: 600;
+    }
+
+    &.bold{
+        font-weight: 700;
+    }
+
+    &.extreBold{
+        font-weight: 800;
+    }
+}
+
+@media screen and (max-width : 1100px){
+    .Body{
+        font-size: 14px;
+    
+        &.small{
+            font-size: 12px;
+        }
+    
+        &.large{
+            font-size: 16px;
+        }
+    }
+}
+
+@media screen and (max-width : 650px){
+    .Body{
+        font-size: 12px;
+    
+        &.small{
+            font-size: 11px;
+        }
+    
+        &.large{
+            font-size: 14px;
+        }
+    }
+}

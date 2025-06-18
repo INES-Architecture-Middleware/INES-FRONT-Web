@@ -1,0 +1,42 @@
+:root {
+  --primary:#ff8800;
+  --primary-hover:#ffa43d;
+  --neutral0: #181818;
+  --neutral100: #373737;
+  --neutral200: #474747;
+  --neutral300: #575757;
+  --neutral400: #777777;
+  --neutral500: #979797;
+  --neutral600: #c7c7c7;
+  --neutral700: #d4d4d4;
+  --neutral800: #FFFFFF;
+
+  --red100:#ff0000;
+}
+
+html{
+  scroll-behavior: smooth;
+}
+
+*{
+  padding: 0;
+  margin: 0;
+  font-family: sans-serif;
+  box-sizing: border-box;
+}
+
+
+body {
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  width: 100vw;
+  position: absolute;
+  overflow-x: hidden;
+  height: 100%;
+  -moz-osx-font-smoothing: grayscale;
+}
+  
+#root{
+  height: 100%;
+  width: 100%;
+}

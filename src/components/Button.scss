@@ -1,0 +1,98 @@
+.Button{
+    cursor: pointer;
+    transition: all .2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 20px;
+    box-sizing: border-box;
+    width: 200px;
+    height: 50px;
+
+    &.disabled{
+        opacity: .5;
+        cursor: default;
+
+        &:hover{
+            opacity: .5;
+        }
+    }
+
+    &:hover{
+        opacity: .9;
+    }
+
+    &.small{
+        width: 160px;
+        height: 30px;
+    }
+
+    &.large{
+        width: 250px;
+        height: 60px;
+    }
+
+    &.primary{
+        border: 3px solid var(--primary);
+
+        &.hover{
+            background-color: var(--primary);
+        }
+    }
+
+    &.secondary{
+        border: 3px solid var(--neutral0);
+
+        &.hover{
+            opacity: .6;
+        }
+    }
+
+    &.tercery{
+        width: auto;
+        height: auto;
+        padding: 0;
+    }
+
+    &.iconButton{
+        width: 40px;
+        height: 40px;
+        padding: 10px;
+        box-sizing: border-box;
+
+        &.small{
+            width: 30px;
+            height: 30px;
+        }
+
+        &.large{
+            width: 50px;
+            height: 50px;
+        }
+
+        .ButtonIcon{
+            width: 100%;
+            margin: 0;
+            height: 100%;
+        }
+    }
+
+    &.justifyLeft{
+        justify-content: start;
+    }
+
+    .ButtonIcon{
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 4px;
+
+        img{
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+    }
+}

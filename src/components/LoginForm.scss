@@ -1,0 +1,47 @@
+.LoginForm{
+    width: 500px;
+    border-radius: 15px;
+    background-color: var(--neutral800);
+    border: 3px solid var(--neutral600);
+    filter: drop-shadow(0 0 20px var(--neutral200));
+    display: flex;
+    flex-direction: column;
+
+    .LoginFormHeader{
+        width: 100%;
+        height: 175px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .LoginFormLogo{
+            width: 150px;
+            height: 150px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            img{
+                pointer-events: none;
+                width: 100%;
+            }
+        }
+    }
+    
+    .FormContainer{
+        padding: 0 30px;
+        padding-bottom: 40px;
+
+        .FormTitle{
+            margin-bottom: 20px;
+        }
+
+        .FormContent{
+            width: 100%;
+            gap: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+    }
+}
