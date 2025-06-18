@@ -60,6 +60,10 @@
                 opacity: 0;
             }
         }
+
+        &.error{
+            border: 2px solid var(--red100);
+        }
     
         .SearchIcon{
             position: absolute;
@@ -88,10 +92,6 @@
             border: none;
             text-decoration: none;
             outline: none;
-    
-            &.error{
-                border: 2px solid var(--red100);
-            }
         }
     
         input:focus{

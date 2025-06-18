@@ -67,11 +67,11 @@
     }
 
     &.error{
-        color: var(--red);
+        color: var(--red100);
     }
 
     &.success{
-        color: var(--green);
+        color: var(--green100);
     }
 
     &.justify{
@@ -113,6 +113,11 @@
 
     &.extreBold{
         font-weight: 800;
+    }
+
+    em{
+        margin-left: 5px;
+        font-size: 12px;
     }
 }
 

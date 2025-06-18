@@ -22,11 +22,11 @@ const Input = (props) => {
 
     return (
         <div className={'InputContainer' + (props.disabled ? " disabled" : "")}>
-            {props.title && <div className="InputTitle"><Body disabled={props.disabled}>{intl.formatMessage({id:props.title})}</Body></div> }
+            {props.title && <div className="InputTitle"><Body error={props.error ? intl.formatMessage({id:props.error}) : null} disabled={props.disabled}>{intl.formatMessage({id:props.title})}</Body></div> }
             {props.type === "textarea" ? 
                 <textarea disabled={props.disabled} className={classNames} type={props.type ? props.type : 'text'} value={props.value} onKeyDown={handleKeyDown} onChange={handleValueChange} required={props.required} placeholder={props.placeholder ? intl.formatMessage({id:props.placeholder}) : ""}/>
                 :
-                <div className={"InputContent" + (props.type === "search" ? " search" : "")}>
+                <div className={"InputContent" + (props.type === "search" ? " search" : "") + (props.error ? " error" : "")}>
                     <input disabled={props.disabled} className={classNames} type={props.type ? props.type : 'text'} value={props.value} onKeyDown={handleKeyDown} onChange={handleValueChange} required={props.required} placeholder={props.placeholder ? intl.formatMessage({id:props.placeholder}) : ""}/>
                     {props.type === "search" && <div className="SearchIcon"><img src={SearchIcon} alt="Search"/></div>}
                 </div>

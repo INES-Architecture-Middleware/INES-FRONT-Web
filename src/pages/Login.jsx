@@ -13,18 +13,24 @@ const Login = (props) => {
 
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
+    const [error, setError] = useState(null)
 
     const login = () => {
-        window.localStorage.setItem("authToken", "TOKEN")
-        navigate('/')
+        if(username && password){
+            if(username === 'username' && password === 'password') setError('login-error')
+            else{
+                window.localStorage.setItem("authToken", "TOKEN")
+                navigate('/')
+            }
+        }
     }
 
     return (
         <div className="Login">
             <LoginForm title={"login"}>
-                <Input onEnterPress={login} title={'username'} value={username} onChange={(e)=>{setUsername(e)}}/>
-                <Input onEnterPress={login} title={'password'} type={'password'} value={password} onChange={(e)=>{setPassword(e)}}/>
-                <Button label={'validate'} onClick={login}/>
+                <Input error={error} onEnterPress={login} title={'username'} value={username} onChange={(e)=>{setUsername(e)}}/>
+                <Input error={error} onEnterPress={login} title={'password'} type={'password'} value={password} onChange={(e)=>{setPassword(e)}}/>
+                <Button disabled={!username || !password} label={'validate'} onClick={login}/>
                 <Button type={'tercery'} label={'no-account'} onClick={()=>{navigate('/register')}}/>
             </LoginForm>
         </div>

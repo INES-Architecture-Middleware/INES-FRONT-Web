@@ -18,7 +18,10 @@ const Body = (props) => {
                     + (props.hover ? ' hover' : '')
 
     return (
-        <p className={"Body" + (classNames)} style={{lineClamp: (props.maxLines ? props.maxLines : "none"), WebkitLineClamp: (props.maxLines ? props.maxLines : "none")}}>{props.children}</p>
+        <p className={"Body" + (classNames)} style={{lineClamp: (props.maxLines ? props.maxLines : "none"), WebkitLineClamp: (props.maxLines ? props.maxLines : "none")}}>
+            {props.children}
+            {props.error && <em className='error'>{props.error}</em>}
+        </p>
     )
 }
 
