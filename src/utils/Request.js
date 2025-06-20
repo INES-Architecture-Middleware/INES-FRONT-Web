@@ -15,6 +15,7 @@ class Request {
 
     static post(url, object){
         return new Promise((resolve, reject) => {
+            console.log(object)
             axios.post(this.serverUrl + url, object, {headers:{'Authorization': `Bearer ${window.localStorage.getItem("authToken")}`}}).then((response) => {
                 let data = response.data
                 if(data && data.error) reject(data)

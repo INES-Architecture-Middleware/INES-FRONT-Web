@@ -15,6 +15,7 @@ const PokemonCase = (props) => {
             </div>
             <div className="PokemonName">
                 <Body center>{props.names.fr}</Body>
+                <Body secondary center weight={'thin'} size={'small'}>{props.names.en}</Body>
             </div>
         </div>
     )

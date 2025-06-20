@@ -64,6 +64,10 @@
         color: #3a3a3a;
     }
 
+    &.secondary{
+        color: var(--body-secondary);
+    }
+
     &.primary{
         color: var(--primary);
 

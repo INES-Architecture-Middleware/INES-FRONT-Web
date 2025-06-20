@@ -16,7 +16,7 @@ const Loader = (props) => {
                 <div className="LoaderIcon">
                     <img src={theme === 'dark'?LoaderWhiteIcon:LoaderIcon} alt="Chargement en cours..." />
                 </div>
-                <div className="LoaderText"><Body>{intl.formatMessage({id:'loading-data'})}</Body></div>
+                {!props.withoutText && <div className="LoaderText"><Body>{intl.formatMessage({id:'loading-data'})}</Body></div>}
             </div>
         </div>
     )

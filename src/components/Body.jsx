@@ -6,6 +6,7 @@ const Body = (props) => {
                     + (props.justify ? ' justify' : '')
                     + (props.center ? ' center' : '')
                     + (props.white ? ' white' : '')
+                    + (props.secondary ? ' secondary' : '')
                     + (props.black ? ' black' : '')
                     + (props.hover ? ' hover' : '')
                     + (props.error ? ' error' : '')

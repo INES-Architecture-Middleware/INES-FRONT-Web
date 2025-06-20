@@ -5,7 +5,7 @@
 
     .HomeContainer{
         width: 100%;
-        height: 100%;
+        height: calc(100vh - 100px);
         overflow-y: scroll;
         padding: 30px 40px;
 
@@ -14,13 +14,25 @@
             margin-bottom: 30px;
         }
 
+        .infinite-scroll-component {
+            padding: 0;
+            background-color: transparent;
+        }
+
         .PokemonList{
             width: 100%;
             height: 100%;
             display: grid;
+            background-color: transparent;
             grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             width: 100%;
             grid-gap: 30px;
         }
     }
+}
+
+.LoadingScroll{
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1/1;
 }
