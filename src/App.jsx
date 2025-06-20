@@ -83,21 +83,37 @@ function App() {
     }
   }
 
-  const saveTeam = (name) => {
+  const saveTeam = (_t) => {
     const userId = window.localStorage.getItem('userId')
     if(userId){
-      Request.post('/team', {
-        name:name,
-        pokemonIds:team.map(t => t.id),
-        user:{
-          _id:userId,
-        }
-      }).then(res => {
-        fetchTeams()
-      }).catch(err => {
-        console.log(err)
-        return
-      })
+      if(_t._id){
+        Request.put('/team', {
+          _id: _t._id,
+          name:_t.name,
+          pokemonIds:team.map(t => t.id),
+          user:{
+            _id:userId,
+          }
+        }).then(res => {
+          fetchTeams()
+        }).catch(err => {
+          console.log(err)
+          return
+        })
+      }else{
+        Request.post('/team', {
+          name:_t.name,
+          pokemonIds:team.map(t => t.id),
+          user:{
+            _id:userId,
+          }
+        }).then(res => {
+          fetchTeams()
+        }).catch(err => {
+          console.log(err)
+          return
+        })
+      }
     }
   }
 
@@ -112,15 +128,11 @@ function App() {
     }
   }
 
-  const editTeam = (team) => {
-    console.log('edit')
-  }
-
   return (
     <div className='AppContainer'>
       <Nav logged={logged} disconnect={disconnect}/>
       <div className="AppContent">
-        <Team newTeam={team} teams={teams} editTeam={editTeam} deleteTeam={deleteTeam} saveTeam={saveTeam} removeToTeam={removeToTeam} setTeam={setTeam}/>
+        <Team newTeam={team} teams={teams} deleteTeam={deleteTeam} saveTeam={saveTeam} removeToTeam={removeToTeam} setTeam={setTeam}/>
         <div className="PageContent">
           <Home changePopupState={changePopupState} addToTeam={addToTeam}/>
         </div>
