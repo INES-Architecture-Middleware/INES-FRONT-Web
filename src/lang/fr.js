@@ -54,8 +54,16 @@ export const fr = {
     "r-4":"x4",
     "r-0":"x0",
 
+    //TEAMS
+
+    "my-teams":"Mes teams",
+    "create-team":"Création d'une team",
+    "create-team-description":"Cliquez sur le bouton \"+\" pour ajouter un pokémon",
+
     "login":"Se connecter",
     "register":"S'inscrire",
     "disconnect":"Déconnexion",
     "validate":"Valider",
+    "save":"Sauvegarder",
+    "cancel":"Annuler"
 }

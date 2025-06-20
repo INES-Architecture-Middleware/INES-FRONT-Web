@@ -98,7 +98,7 @@ const Home = (props) => {
                 <>
                     <div className="PokemonList">
                         {data.map((pokemon, idPokemon) => (
-                            <PokemonCase key={'Pokemon-'+idPokemon} {...pokemon} onClick={()=>handlePokemonClick(pokemon)}/>
+                            <PokemonCase addToTeam={()=>{props.addToTeam(pokemon)}} key={'Pokemon-'+idPokemon} {...pokemon} onClick={()=>handlePokemonClick(pokemon)}/>
                         ))}
                         <InfiniteScroll
                             dataLength={data.length} //This is important field to render the next data

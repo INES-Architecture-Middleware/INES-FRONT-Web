@@ -9,7 +9,7 @@ const Button = (props) => {
     const [hover, setHover] = useState(false)
 
     const handleClick = (e) => {
-        if(props.onClick && !props.disabled) props.onClick()
+        if(props.onClick && !props.disabled) props.onClick(e)
     }
 
     let cn = "Button" +
@@ -24,7 +24,7 @@ const Button = (props) => {
     return (
         <div className={cn + (hover ? " hover" : "")} onClick={handleClick} onMouseEnter={()=>{setHover(true)}} onMouseLeave={()=>{setHover(false)}}>
             {props.icon && <div className="ButtonIcon"><img src={props.icon} alt="Icone du bouton" /></div> }
-            {props.label && <Body underline={props.type === "tercery"} hover={props.type === 'tercery'} primary={((props.type === "primary" || !props.type) && (!hover || props.disabled)) || props.type === "tercery"} center={props.type !== "tercery"} white={((props.type === "primary" || !props.type) && hover && !props.disabled)}>{intl.formatMessage({id:props.label})}</Body>}
+            {props.label && <Body size={"small"} underline={props.type === "tercery"} hover={props.type === 'tercery'} primary={((props.type === "primary" || !props.type) && (!hover || props.disabled)) || props.type === "tercery"} center={props.type !== "tercery"} white={((props.type === "primary" || !props.type) && hover && !props.disabled)}>{intl.formatMessage({id:props.label})}</Body>}
         </div>
     )
 }
