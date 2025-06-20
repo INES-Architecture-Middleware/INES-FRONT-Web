@@ -83,14 +83,14 @@ const PokemonPopup = (props) => {
                                     <div className="TableRow">
                                         {Object.keys(types).map((type, id) => (
                                             <div key={'case-'+type} className="TableCase" style={{backgroundColor:colorType(type)}}>
-                                                <Body center>{intl.formatMessage({id:type})}</Body>
+                                                {type && <Body center>{intl.formatMessage({id:type})}</Body>}
                                             </div>
                                         ))}
                                     </div>
                                     <div className="TableRow">
                                         {Object.keys(types).map((type, id) => (
                                             <div key={'case-'+type} className="TableCase" style={{backgroundColor:colorResistance(calculerResistance(props.pokemon.types.map(f => f.en), type), theme)}}>
-                                                <Body weight={'thin'} black center>{intl.formatMessage({id:calculerResistance(props.pokemon.types.map(f => f.en), type)})}</Body>
+                                                {type && <Body weight={'thin'} black center>{intl.formatMessage({id:"r-" + calculerResistance(props.pokemon.types.map(f => f.en), type)})}</Body>}
                                             </div>
                                         ))}
                                     </div>
