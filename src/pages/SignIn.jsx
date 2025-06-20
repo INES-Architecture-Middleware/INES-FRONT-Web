@@ -5,6 +5,7 @@ import Input from "../components/Input";
 import Button from "../components/Button";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Request from "../utils/Request";
 
 const SignIn = (props) => {
     const intl = useIntl()
@@ -18,16 +19,20 @@ const SignIn = (props) => {
 
     const register = () => {
         if(username && password && confirmPassword){
-            let errorTmp = []
-            if(password !== confirmPassword) errorTmp.push("password-error")
-            if(username === "username") errorTmp.push("already-use")
+            if(password !== confirmPassword) setErrors(["password-error"])
+            // Request.post('/login', {username:username, password:password, confirmPassword:confirmPassword}).then((res) => {
+            //     window.localStorage.setItem("authToken", res.token)
+            //     window.localStorage.setItem("username", username)
+            //     navigate('/')
+            // }).catch(err => {
+            //     console.log(err)
+            //     setErrors(["already-use"])
+            //     return
+            // })
 
-            if(errorTmp.length > 0){
-                setErrors(errorTmp)
-            }else{
-                window.localStorage.setItem("authToken", 'TOKEN')
-                navigate('/')
-            }
+            window.localStorage.setItem("authToken", "token")
+            window.localStorage.setItem("username", username)
+            navigate('/')
         }
     }
 

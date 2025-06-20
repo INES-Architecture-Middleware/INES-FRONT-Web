@@ -12,7 +12,7 @@
         max-width: 100%;
         font-size: 14px;
         height: 150px;
-        border: 2px solid var(--neutral0);
+        border: 2px solid var(--borders);
         min-height: 150px;
         padding: 20px;
         box-sizing: border-box;
@@ -41,7 +41,7 @@
         height: 50px;
         position: relative;
         border-radius: 10px;
-        border: 2px solid var(--neutral200);
+        border: 2px solid var(--borders);
         transition: opacity .2s;
     
         &.search{
@@ -67,13 +67,14 @@
     
         .SearchIcon{
             position: absolute;
-            left: 0;
-            top: 0;
-            width: 50px;
+            left: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
             display: flex;
             align-items: center;
             justify-content: center;
-            height: 50px;
+            height: 40px;
             z-index: 100;
     
             img{
@@ -86,6 +87,8 @@
             width: 100%;
             box-sizing: border-box;
             height: 100%;
+            background-color: transparent;
+            color: var(--body);
             font-size: 16px;
             padding: 10px 15px;
             border-radius: 10px;

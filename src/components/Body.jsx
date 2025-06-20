@@ -13,7 +13,9 @@ const Body = (props) => {
                     + (props.disabled ? ' disabled' : '')
                     + (props.boxSizing ? ' boxSizing' : '')
                     + (props.line ? ' line' : '')
+                    + (props.right ? ' right' : '')
                     + (props.uppercase ? ' uppercase' : '')
+                    + (props.disabled ? ' disabled' : '')
                     + (props.underline ? ' underline' : '')
                     + (props.hover ? ' hover' : '')
 

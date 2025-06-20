@@ -1,5 +1,5 @@
 .Heading{
-    color:var(--neutral0);
+    color:var(--heading);
     width: 100%;
 
     &.center{
@@ -7,7 +7,7 @@
     }
 
     &.white{
-        color: var(neutral800);
+        color: var(neutral700);
     }
 
     &.uppercase{

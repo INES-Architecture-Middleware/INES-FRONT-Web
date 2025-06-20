@@ -5,6 +5,7 @@ import Input from "../components/Input";
 import { useState } from "react";
 import Button from "../components/Button";
 import { useNavigate } from "react-router-dom";
+import Request from "../utils/Request";
 
 const Login = (props) => {
     const intl = useIntl()
@@ -17,11 +18,19 @@ const Login = (props) => {
 
     const login = () => {
         if(username && password){
-            if(username === 'username' && password === 'password') setError('login-error')
-            else{
-                window.localStorage.setItem("authToken", "TOKEN")
-                navigate('/')
-            }
+            // Request.post('/login', {username:username, password:password}).then((res) => {
+            //     window.localStorage.setItem("authToken", res.token)
+            //     window.localStorage.setItem("username", username)
+            //     navigate('/')
+            // }).catch(err => {
+            //     console.log(err)
+            //     setError('login-error')
+            //     return
+            // })
+
+            window.localStorage.setItem("authToken", 'token')
+            window.localStorage.setItem("username", username)
+            navigate('/')
         }
     }
 

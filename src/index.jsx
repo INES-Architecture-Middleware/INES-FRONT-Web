@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import {IntlProvider} from "react-intl";
+import { ThemeProvider } from './components/ThemeContext.jsx';
 import Router from './Router.jsx';
 import './index.scss'
 
@@ -18,7 +19,9 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <React.StrictMode>
         <IntlProvider onError={()=>{}} locale={navigator.language} messages={messages[language]}>
-            <Router/>
+            <ThemeProvider>
+                <Router/>
+            </ThemeProvider>
         </IntlProvider>
     </React.StrictMode>
 )

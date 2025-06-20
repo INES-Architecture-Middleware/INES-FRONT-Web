@@ -10,7 +10,7 @@
     width: 100%;
     font-weight: 400;
     letter-spacing: 0em;
-    color: var(--neutral0);
+    color: var(--body);
     font-family: sans-serif;
     white-space: pre-line;
 
@@ -46,12 +46,16 @@
         transition: all .2s;
     }
 
+    &.right{
+        text-align: right;
+    }
+
     &.white{
-        color: var(--neutral800);
+        color: var(--neutral700);
 
         &.hover{
             &:hover{
-                color: var(--neutral800);
+                color: var(--neutral700);
             }
         }
     }
