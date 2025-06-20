@@ -22,6 +22,37 @@ export const fr = {
     "weight":"Poids",
     "weight-kg":"{weight} kg",
     "stats-title":"Statistiques",
+    "sensibilities":"Sensibilités",
+
+    //Types
+
+    "fairy": "Fée",
+    "fire": "Feu",
+    "water": "Eau",
+    "steel": "Acier",
+    "ground": "Sol",
+    "normal": "Normal",
+    "fighting": "Combat",
+    "flying": "Vol",
+    "poison": "Poison",
+    "electric": "Électrique",
+    "grass": "Plante",
+    "psychic": "Psy",
+    "ice": "Glace",
+    "bug": "Insecte",
+    "rock": "Roche",
+    "ghost": "Spectre",
+    "dragon": "Dragon",
+    "dark": "Ténèbres",
+
+    //resistances
+
+    "r-0.25":"x1/4",
+    "r-0.5":"x1/2",
+    "r-1":"x1",
+    "r-2":"x2",
+    "r-4":"x4",
+    "r-0":"x0",
 
     "login":"Se connecter",
     "register":"S'inscrire",

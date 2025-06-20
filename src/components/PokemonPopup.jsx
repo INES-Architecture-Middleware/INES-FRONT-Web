@@ -5,9 +5,10 @@ import CrossWhiteIcon from './../assets/cross-white.svg'
 import { useContext, useEffect, useState } from 'react';
 import ThemeContext from './ThemeContext';
 import Heading from './Heading';
-import { colorType } from '../utils/helpers';
+import { colorResistance, colorType } from '../utils/helpers';
 import Body from './Body';
 import Type from './Type';
+import {calculerResistance, types} from '../data/types.js';
 
 const PokemonPopup = (props) => {
     const intl = useIntl(null)
@@ -15,7 +16,7 @@ const PokemonPopup = (props) => {
     const { theme, toggleTheme, fetching } = useContext(ThemeContext);
 
     useEffect(()=>{
-        console.log(props)
+        console.log()
         setColor(colorType(props.pokemon.types[0].fr))
     }, [])
 
@@ -74,6 +75,27 @@ const PokemonPopup = (props) => {
                     <div className="PokemonStats">
                         <div className="StatsTitle">
                             <Heading size={'h3'}>{intl.formatMessage({id:"stats-title"})}</Heading>
+                            <div className="SensibilitiesTable">
+                                <div className="TableHeader" style={{backgroundColor:color}}>
+                                    <Heading size={'h5'}>{intl.formatMessage({id:'sensibilities'})}</Heading>
+                                </div>
+                                <div className="TableContent">
+                                    <div className="TableRow">
+                                        {Object.keys(types).map((type, id) => (
+                                            <div key={'case-'+type} className="TableCase" style={{backgroundColor:colorType(type)}}>
+                                                <Body center>{intl.formatMessage({id:type})}</Body>
+                                            </div>
+                                        ))}
+                                    </div>
+                                    <div className="TableRow">
+                                        {Object.keys(types).map((type, id) => (
+                                            <div key={'case-'+type} className="TableCase" style={{backgroundColor:colorResistance(calculerResistance(props.pokemon.types.map(f => f.en), type), theme)}}>
+                                                <Body weight={'thin'} black center>{intl.formatMessage({id:calculerResistance(props.pokemon.types.map(f => f.en), type)})}</Body>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

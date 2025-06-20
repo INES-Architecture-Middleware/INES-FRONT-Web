@@ -109,6 +109,41 @@
 
             .PokemonStats{
                 padding: 30px;
+                width: 100%;
+
+                .SensibilitiesTable{
+                    display: flex;
+                    flex-direction: column;
+                    width: 100%;
+                    padding-top: 20px;
+
+                    .TableHeader{
+                        display: flex;
+                        align-items: center;
+                        padding: 10px 20px;
+                        border-top-left-radius: 5px;
+                        border-top-right-radius: 5px;
+                    }
+
+                    .TableContent{
+                        display: flex;
+                        width: 100%;
+                        flex-direction: column;
+
+                        .TableRow{
+                            width: 100%;
+                            display: flex;
+
+                            .TableCase{
+                                width: 100%;
+                                display: flex;
+                                align-items: center;
+                                height: 40px;
+                                justify-content: center;
+                            }
+                        }
+                    }
+                }
             }
         }
     }
