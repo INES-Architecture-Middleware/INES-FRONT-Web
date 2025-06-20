@@ -18,19 +18,16 @@ const Login = (props) => {
 
     const login = () => {
         if(username && password){
-            // Request.post('/login', {username:username, password:password}).then((res) => {
-            //     window.localStorage.setItem("authToken", res.token)
-            //     window.localStorage.setItem("username", username)
-            //     navigate('/')
-            // }).catch(err => {
-            //     console.log(err)
-            //     setError('login-error')
-            //     return
-            // })
-
-            window.localStorage.setItem("authToken", 'token')
-            window.localStorage.setItem("username", username)
-            navigate('/')
+            Request.post('/login', {username:username, password:password}).then((res) => {
+                window.localStorage.setItem("authToken", res.token)
+                window.localStorage.setItem("userId", res.user._id)
+                window.localStorage.setItem("username", username)
+                navigate('/')
+            }).catch(err => {
+                console.log(err)
+                setError('login-error')
+                return
+            })
         }
     }
 

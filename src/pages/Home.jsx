@@ -57,7 +57,6 @@ const Home = (props) => {
 
     const fetchPokemons = (filters, reset=false) => {
         Request.post('/pokemon/filter/'+(reset ? 0 : page), filters).then((res) => {
-            console.log(res)
             setPage(reset ? 1 : Number(res.page) + 1)
             if(res.pageSize !== pageSize) setPageSize(res.pageSize)
             if(res.total !== dataLength) setDataLength(res.total)

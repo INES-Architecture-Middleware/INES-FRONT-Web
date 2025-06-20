@@ -59,10 +59,13 @@ export const fr = {
     "my-teams":"Mes teams",
     "create-team":"Création d'une team",
     "create-team-description":"Cliquez sur le bouton \"+\" pour ajouter un pokémon",
+    "team-empty":"Vous n'avez aucune team.",
+    "team-create":"Créer une team",
 
     "login":"Se connecter",
     "register":"S'inscrire",
     "disconnect":"Déconnexion",
+    "name":"Nom de votre team",
     "validate":"Valider",
     "save":"Sauvegarder",
     "cancel":"Annuler"

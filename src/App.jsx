@@ -5,6 +5,7 @@ import { Routes, useNavigate, useParams } from 'react-router-dom'
 import Home from './pages/Home'
 import Popup from './components/Popup'
 import Team from './pages/Team'
+import Request from './utils/Request'
 
 function App() {
   const [logged, setLogged] = useState(null)
@@ -18,7 +19,10 @@ function App() {
 
   useEffect(()=>{
     const authToken = window.localStorage.getItem("authToken")
-    if(authToken) setLogged(true)
+    if(authToken) {
+      setLogged(true)
+      fetchTeams()
+    }
     else setLogged(false)
   }, [])
 
@@ -40,6 +44,17 @@ function App() {
     }
   }, [params])
 
+  const fetchTeams = () => {
+    let userId = window.localStorage.getItem('userId')
+    if(userId){
+      Request.get('/team?userId='+userId).then(res => {
+        setTeams(res)
+      }).catch(err => {
+        console.log(err)
+      }) 
+    }
+  }
+
   const disconnect = () => {
     window.localStorage.removeItem("authToken")
     window.location.reload()
@@ -51,7 +66,6 @@ function App() {
   }
 
   const addToTeam = (pokemon) => {
-    console.log(pokemon)
     if(team.length < 6){
       let teamTmp = [...team]
       teamTmp.push(pokemon)
@@ -69,11 +83,44 @@ function App() {
     }
   }
 
+  const saveTeam = (name) => {
+    const userId = window.localStorage.getItem('userId')
+    if(userId){
+      Request.post('/team', {
+        name:name,
+        pokemonIds:team.map(t => t.id),
+        user:{
+          _id:userId,
+        }
+      }).then(res => {
+        fetchTeams()
+      }).catch(err => {
+        console.log(err)
+        return
+      })
+    }
+  }
+
+  const deleteTeam = (team) => {
+    if(team && team._id){
+      Request.delete('/team/'+team._id).then(res => {
+        fetchTeams()
+      }).catch(err => {
+        console.log(err)
+        return
+      })
+    }
+  }
+
+  const editTeam = (team) => {
+    console.log('edit')
+  }
+
   return (
     <div className='AppContainer'>
       <Nav logged={logged} disconnect={disconnect}/>
       <div className="AppContent">
-        <Team newTeam={team} removeToTeam={removeToTeam} setTeam={setTeam}/>
+        <Team newTeam={team} teams={teams} editTeam={editTeam} deleteTeam={deleteTeam} saveTeam={saveTeam} removeToTeam={removeToTeam} setTeam={setTeam}/>
         <div className="PageContent">
           <Home changePopupState={changePopupState} addToTeam={addToTeam}/>
         </div>

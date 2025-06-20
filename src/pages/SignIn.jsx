@@ -20,19 +20,16 @@ const SignIn = (props) => {
     const register = () => {
         if(username && password && confirmPassword){
             if(password !== confirmPassword) setErrors(["password-error"])
-            // Request.post('/login', {username:username, password:password, confirmPassword:confirmPassword}).then((res) => {
-            //     window.localStorage.setItem("authToken", res.token)
-            //     window.localStorage.setItem("username", username)
-            //     navigate('/')
-            // }).catch(err => {
-            //     console.log(err)
-            //     setErrors(["already-use"])
-            //     return
-            // })
-
-            window.localStorage.setItem("authToken", "token")
-            window.localStorage.setItem("username", username)
-            navigate('/')
+            Request.post('/user', {username:username, password:password, confirmPassword:confirmPassword}).then((res) => {
+                window.localStorage.setItem("userId", res.user._id)
+                window.localStorage.setItem("authToken", res.token)
+                window.localStorage.setItem("username", username)
+                navigate('/')
+            }).catch(err => {
+                console.log(err)
+                setErrors(["already-use"])
+                return
+            })
         }
     }
 
