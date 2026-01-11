@@ -1,12 +1,30 @@
-# React + Vite
+# INES FRONT WEB
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+#### Group Members
+* Mesrop AGHUMYAN
+* Ian BERTIN
+* Hugo CREPIN
+* Ulysse HOLZINGER
+* Tanguy MACE
+* Olivier RECHER
 
-Currently, two official plugins are available:
+#### Project Setup
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+1. Create `.env` file:
 
-## Expanding the ESLint configuration
+```bash
+touch .env
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+2. Add the VITE_URL_GATEWAY variable in .env with your API Gateway URL:
+
+```
+VITE_URL_GATEWAY=your_api_gateway_url
+```
+
+3. Install dependencies and start the development server:
+
+```bash
+npm install
+npm run dev
+```

@@ -4,13 +4,15 @@ import LoginForm from "../components/LoginForm";
 import Input from "../components/Input";
 import Button from "../components/Button";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Request from "../utils/Request";
+import { useEffect } from "react";
 
 const SignIn = (props) => {
     const intl = useIntl()
 
     const navigate = useNavigate()
+    const params = useParams()
 
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
@@ -18,9 +20,10 @@ const SignIn = (props) => {
     const [errors, setErrors] = useState([])
 
     const register = () => {
-        if(username && password && confirmPassword){
+        const token = params.token
+        if(username && password && confirmPassword && token){
             if(password !== confirmPassword) setErrors(["password-error"])
-            Request.post('/user', {username:username, password:password, confirmPassword:confirmPassword}).then((res) => {
+            Request.post('/register', {username:username, password:password, confirmPassword:confirmPassword, registerToken:token}).then((res) => {
                 window.localStorage.setItem("userId", res.user._id)
                 window.localStorage.setItem("authToken", res.token)
                 window.localStorage.setItem("username", username)

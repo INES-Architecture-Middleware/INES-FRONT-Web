@@ -9,7 +9,7 @@ const Router = (props) => {
             <Routes>
                 <Route path={'/*'} element={<App/>}/>
                 <Route path={'/login'} element={<Login/>}/>
-                <Route path={'/register'} element={<SignIn/>}/>
+                <Route path={'/register/:token'} element={<SignIn/>}/>
             </Routes>
         </BrowserRouter>
     )

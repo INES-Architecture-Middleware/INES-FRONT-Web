@@ -9,7 +9,7 @@ export default defineConfig({
     outDir: 'build'
   },
   server: {
-    port:3008,
+    port:3125,
     hmr: {
       overlay: false
     },
