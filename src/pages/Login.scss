@@ -3,6 +3,17 @@
     height: 100%;
     display: flex;
     align-items: center;
+    padding: 20px;
     justify-content: center;
     background-color: var(--background);
+
+    .FieldsContainer{
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .ButtonContainer{
+        margin-top: 10px;
+    }
 }

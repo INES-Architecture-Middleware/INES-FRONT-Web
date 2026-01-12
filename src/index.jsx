@@ -2,11 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import {IntlProvider} from "react-intl";
 import { ThemeProvider } from './components/ThemeContext.jsx';
-import Router from './Router.jsx';
 import './index.scss'
 
 import {en} from "./lang/en.js";
 import {fr} from "./lang/fr.js";
+import App from './pages/App.jsx';
 
 const messages = {
   'en': en,
@@ -20,7 +20,7 @@ root.render(
     <React.StrictMode>
         <IntlProvider onError={()=>{}} locale={navigator.language} messages={messages[language]}>
             <ThemeProvider>
-                <Router/>
+                <App/>
             </ThemeProvider>
         </IntlProvider>
     </React.StrictMode>

@@ -51,11 +51,11 @@
     }
 
     &.white{
-        color: var(--neutral700);
+        color: var(--neutral100);
 
         &.hover{
             &:hover{
-                color: var(--neutral700);
+                color: var(--neutral150);
             }
         }
     }

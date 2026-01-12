@@ -39,12 +39,12 @@ const Nav = (props) => {
                     <div className="username">
                         <Body weight={'bold'}>{window.localStorage.getItem("username") ? window.localStorage.getItem("username") : ""}</Body>
                     </div>
-                    <div className="LogoutButton" onClick={props.disconnect}>
+                    <div className="LogoutButton" onClick={props.logout}>
                         <img src={theme === 'light' ? LogoutIcon : LogoutWhiteIcon} alt="Logout icon"/>
                     </div>
                 </>
                 :
-                <Button label={'login'} type={"secondary"} onClick={onLoginClicked}/>
+                <Button label={'login'} onClick={onLoginClicked}/>
                 }
             </div>
         </div>

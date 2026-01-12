@@ -32,6 +32,29 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 //   {items}
 // </InfiniteScroll>
 
+const PokemonList = (props) => {
+
+    if(!props.data || props.data.length === 0) return null
+
+    return (
+        <div className="PokemonList">
+                {props.data.map((pokemon, idPokemon) => (
+                    <PokemonCase addToTeam={()=>{props.addToTeam(pokemon)}} key={'Pokemon-'+idPokemon} {...pokemon} onClick={()=>handlePokemonClick(pokemon)}/>
+                ))}
+                <InfiniteScroll
+                    dataLength={props.data.length} //This is important field to render the next data
+                    next={()=>props.fetch()}
+                    hasMore={props.data.length !== props.dataLength}
+                    loader={ <div className="LoadingScroll">
+                        <Loader withoutText/>
+                    </div> }
+                    scrollableTarget="scrollableDiv"
+                >
+                </InfiniteScroll>
+            </div>
+    )
+}
+
 const Home = (props) => {
     const intl = useIntl()
 
@@ -94,23 +117,7 @@ const Home = (props) => {
                 </div>
                 {!data || fetching ? <Loader/>
                 : 
-                <>
-                    <div className="PokemonList">
-                        {data.map((pokemon, idPokemon) => (
-                            <PokemonCase addToTeam={()=>{props.addToTeam(pokemon)}} key={'Pokemon-'+idPokemon} {...pokemon} onClick={()=>handlePokemonClick(pokemon)}/>
-                        ))}
-                        <InfiniteScroll
-                            dataLength={data.length} //This is important field to render the next data
-                            next={()=>fetchPokemons()}
-                            hasMore={data.length !== dataLength}
-                            loader={ <div className="LoadingScroll">
-                                <Loader withoutText/>
-                            </div> }
-                            scrollableTarget="scrollableDiv"
-                        >
-                        </InfiniteScroll>
-                    </div>
-                </>
+                <PokemonList fetch={fetchPokemons} data={data} dataLength={dataLength}/>
                 }
             </div>
         </div>

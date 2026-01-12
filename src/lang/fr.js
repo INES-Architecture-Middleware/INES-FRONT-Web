@@ -1,9 +1,12 @@
 export const fr = {
     "pokemon-team-planner" : "Créateur de team pokemon",
 
-    "username": "Identifiant :",
-    "password": "Mot de passe :",
-    "confirm-password": "Confirmer votre mot de passe :",
+    "username-field": "Identifiant :",
+    "username-placeholder": "Exemple : username45",
+    "password-field": "Mot de passe :",
+    "password-placeholder": "Saisir votre mot de passe",
+    "confirm-password-field": "Confirmer votre mot de passe :",
+    "confirm-password-placeholder": "Saisir votre mot de passe",
     "no-account":"Vous n'avez pas de compte ? S'inscrire",
     "already-have":"Vous avez déjà un compte ? Se connecter",
     "password-error":"Les mots de passe saisis sont différents.",
