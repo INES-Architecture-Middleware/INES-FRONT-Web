@@ -8,30 +8,6 @@ import Input from "../components/Input";
 import PokemonPopup from "../components/PokemonPopup";
 import InfiniteScroll from 'react-infinite-scroll-component';
 
-// <InfiniteScroll
-//   dataLength={items.length} //This is important field to render the next data
-//   next={fetchData}
-//   hasMore={true}
-//   loader={<h4>Loading...</h4>}
-//   endMessage={
-//     <p style={{ textAlign: 'center' }}>
-//       <b>Yay! You have seen it all</b>
-//     </p>
-//   }
-//   // below props only if you need pull down functionality
-//   refreshFunction={this.refresh}
-//   pullDownToRefresh
-//   pullDownToRefreshThreshold={50}
-//   pullDownToRefreshContent={
-//     <h3 style={{ textAlign: 'center' }}>&#8595; Pull down to refresh</h3>
-//   }
-//   releaseToRefreshContent={
-//     <h3 style={{ textAlign: 'center' }}>&#8593; Release to refresh</h3>
-//   }
-// >
-//   {items}
-// </InfiniteScroll>
-
 const PokemonList = (props) => {
 
     if(!props.data || props.data.length === 0) return null
@@ -43,7 +19,7 @@ const PokemonList = (props) => {
                 ))}
                 <InfiniteScroll
                     dataLength={props.data.length} //This is important field to render the next data
-                    next={()=>props.fetch()}
+                    next={props.fetch}
                     hasMore={props.data.length !== props.dataLength}
                     loader={ <div className="LoadingScroll">
                         <Loader withoutText/>
@@ -115,10 +91,13 @@ const Home = (props) => {
                 <div className="SearchContainer">
                     <Input placeholder={"search-pokemon"} type={'search'} value={search} onChange={(e)=>{setSearch(e)}}/>
                 </div>
-                {!data || fetching ? <Loader/>
-                : 
-                <PokemonList fetch={fetchPokemons} data={data} dataLength={dataLength}/>
-                }
+
+                <div className="HomeContent">
+                    {!data || fetching ? 
+                        <Loader/>: 
+                        <PokemonList fetch={()=>{fetchPokemons({name:search})}} data={data} dataLength={dataLength}/>
+                    }
+                </div>
             </div>
         </div>
     )

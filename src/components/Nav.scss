@@ -3,28 +3,32 @@
     height: 80px;
     background-color: var(--components);
     display: flex;
+    position: relative;
+    z-index: 100;
     align-items: center;
+    filter: drop-shadow(0 0 5px rgba(0, 0, 0, .20));
     padding: 0 40px;
     justify-content: space-between;
 
     .NavOpacity{
         width: 100%;
-        height: calc(100% - 80px);
+        height: calc(100dvh - 80px);
         position: fixed;
-        z-index: -1;
+        visibility: hidden;
         background-color: rgba($color: #000000, $alpha: .25);
         top: 80px;
         left:0;
         opacity: 0;
         transition: 
             opacity .2s 0s,
-            z-index 0s .2s;
+            visibility 0s .2s;
 
         &.opened{
             opacity: 1;
+            visibility: visible;
             z-index: 100;
             transition: 
-                z-index 0s 0s,
+                visibility0s 0s,
                 opacity .2s 0s;
         }
     }
@@ -80,7 +84,7 @@
             border-top: 2px solid var(--background);
             // box-shadow: -4px 4px 4px rgba($color: #000000, $alpha: .15);
             max-width: 300px;
-            height: calc(100% - 80px);
+            height: calc(100dvh - 80px);
             flex-direction: column;
             padding: 30px;
             z-index: 1000;

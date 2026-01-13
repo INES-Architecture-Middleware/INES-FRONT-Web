@@ -25,11 +25,14 @@ const PokemonCase = (props) => {
                 <img src={props.sprites.official_artwork} alt="" />
             </div>
             <div className="PokemonName">
-                <Body center>{props.names.fr}</Body>
-                <Body secondary center weight={'thin'} size={'small'}>{props.names.en}</Body>
-                <div className="PlusButton" onClick={(e) => handleButtonClick(e)}>
-                    <img src={theme === 'dark' ? PlusWhiteIcon : PlusIcon} alt="Plus icon" />
+                <div className="Names">
+                    <Body center>{props.names.fr}</Body>
+                    <Body secondary center weight={'thin'} size={'small'}>{props.names.en}</Body>
                 </div>
+                {/* <div className="PlusButton" onClick={(e) => handleButtonClick(e)}>
+                    <img src={theme === 'dark' ? PlusWhiteIcon : PlusIcon} alt="Plus icon" />
+                </div> */}
+                <Button icon={PlusWhiteIcon} size={'small'} type={'secondary'} onClick={(e) => handleButtonClick(e)}/>
             </div>
         </div>
     )

@@ -1,5 +1,28 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
 
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: var(--neutral750);
+  border-left: 1px solid var(--components);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--neutral400);
+  border-radius: 20px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--neutral500);
+}
+
+
 :root {
   --primary:#FEDF4B;
   --primary-hover:#ecd977;
@@ -18,7 +41,7 @@
   --background: var(--neutral800);
   --heading: var(--neutral100);
   --body: var(--neutral150);
-  --body-secondary: var(--neutral400);
+  --body-secondary: var(--neutral300);
   --components: var(--neutral700);
   --borders: var(--neutral300);
 
@@ -53,6 +76,7 @@
 
 html{
   scroll-behavior: smooth;
+  overflow: hidden;
 }
 
 *{

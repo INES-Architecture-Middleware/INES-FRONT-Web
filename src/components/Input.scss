@@ -74,10 +74,11 @@
             align-items: center;
             justify-content: center;
             height: 40px;
-            z-index: 100;
+            z-index: 10;
     
             img{
                 width: 30px;
+                pointer-events: none;
                 height: 30px;
             }
         }
