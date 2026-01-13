@@ -15,7 +15,7 @@ const Button = (props) => {
     let cn = "Button" +
         (props.type === "secondary" ? " secondary" : (props.type === "tercery" ? " tercery" : " primary")) +
         (props.justifyLeft ? " justifyLeft" : "") +
-        (props.iconButton ? " iconButton" : "") +
+        ((props.icon && !props.label) ? " iconButton" : "") +
         (props.disabled ? " disabled" : "") +
         (props.size ? (" " + props.size) : " medium")
 

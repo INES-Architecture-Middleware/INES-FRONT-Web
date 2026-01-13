@@ -1,6 +1,5 @@
 .AppContainer{
   width: 100%;
-  height: 100%;
   background-color: var(--background);
   display: flex;
   flex-direction: column;
@@ -9,14 +8,6 @@
   .AppContent{
     width: 100%;
     position: relative;
-    height: calc(100% - 100px);
-
-    .PageContent{
-      width: calc(100% - 400px);
-      position: absolute;
-      left: 400px;
-      top: 0;
-      height: 100%;
-    }
+    height: calc(100% - 80px);
   }
 }

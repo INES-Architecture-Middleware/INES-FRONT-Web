@@ -1,15 +1,12 @@
-import { useIntl } from "react-intl";
 import './Login.scss'
 import LoginForm from "../components/LoginForm";
 import Input from "../components/Input";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Button from "../components/Button";
 import { useNavigate, useParams } from "react-router-dom";
 import Request from "../utils/Request";
 
 const Login = (props) => {
-    const intl = useIntl()
-
     const params = useParams()
     const navigate = useNavigate()
 

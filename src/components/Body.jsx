@@ -7,6 +7,7 @@ const Body = (props) => {
                     + (props.center ? ' center' : '')
                     + (props.white ? ' white' : '')
                     + (props.secondary ? ' secondary' : '')
+                    + (props.overflow ? ' overflow' : '')
                     + (props.black ? ' black' : '')
                     + (props.hover ? ' hover' : '')
                     + (props.error ? ' error' : '')
@@ -22,7 +23,7 @@ const Body = (props) => {
                     + (props.hover ? ' hover' : '')
 
     return (
-        <p className={"Body" + (classNames)} style={{lineClamp: (props.maxLines ? props.maxLines : "none"), WebkitLineClamp: (props.maxLines ? props.maxLines : "none")}}>
+        <p className={"Body" + (classNames)} style={{maxWidth: (props.maxWidth ? props.maxWidth : "auto"),lineClamp: (props.maxLines ? props.maxLines : "none"), WebkitLineClamp: (props.maxLines ? props.maxLines : "none")}}>
             {props.children}
             {props.error && <em className='error'>{props.error}</em>}
         </p>

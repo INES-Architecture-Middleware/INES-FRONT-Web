@@ -3,18 +3,14 @@ import './LoginForm.scss'
 import Logo from './../assets/logo.svg'
 import { useNavigate } from "react-router-dom";
 import Heading from "./Heading";
-import { useContext } from "react";
-import ThemeContext from "./ThemeContext";
 
 const LoginForm = (props) => {
     const intl = useIntl()
 
-    const { theme, toggleTheme, fetching } = useContext(ThemeContext);
-
     const navigate = useNavigate()
 
     return (
-        <div className={"LoginForm" + (theme === "dark" ? " dark" : "")}>
+        <div className={"LoginForm"}>
             <div className="LoginFormHeader">
                 <div className="LoginFormLogo" onClick={()=>{navigate('/')}}>
                     <img src={Logo} alt="Logo de l'application" />
