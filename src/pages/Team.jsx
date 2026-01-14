@@ -7,6 +7,14 @@ import Button from "../components/Button"
 import Pokeball from "../components/Pokeball"
 import { colorType } from "../utils/helpers"
 import PlusIcon from "./../assets/plus-white.svg"
+import RenameIcon from "./../assets/rename_white.svg"
+import SwitchIcon from "./../assets/switch_white.svg"
+import AnalyseIcon from "./../assets/analyse_white.svg"
+import SaveIcon from "./../assets/save_white.svg"
+import ExtendIcon from "./../assets/extend_white.svg"
+import CrossIcon from "./../assets/cross-white.svg"
+import TrashIcon from "./../assets/trash-white.svg"
+import EditIcon from "./../assets/edit-white.svg"
 import Request from "../utils/Request"
 import Body from "../components/Body"
 
@@ -27,13 +35,13 @@ const TeamDetails = (props) => {
                 ))}
             </div>
             <div className="TeamDetailsActions">
-                <Button size={'full'} type={'secondary'} label={'show-analyse-team'} onClick={()=>props.handleAnalyseClicked(props)}/>
+                <Button icon={AnalyseIcon} size={'full'} type={'secondary'} label={'show-analyse-team'} onClick={()=>props.handleAnalyseClicked(props)}/>
                 {
                     props.selected && props._id === props.selected ?
-                    <Button size={'full'} type={'secondary'} label={'cancel-edition'} onClick={()=>props.handleEditTeam(props)}/>
+                    <Button icon={CrossIcon} size={'full'} type={'secondary'} label={'cancel-edition'} onClick={()=>props.handleEditTeam(props)}/>
                     :<div className="ActionsRow">
-                        <Button size={'full'} type={'secondary'} label={'edit'} onClick={()=>props.handleEditTeam(props)}/>
-                        <Button size={'full'} type={'secondary'} label={'delete'} onClick={()=>props.handleDeleteTeam(props._id)}/>
+                        <Button icon={EditIcon} size={'full'} type={'secondary'} label={'edit'} onClick={()=>props.handleEditTeam(props)}/>
+                        <Button icon={TrashIcon} size={'full'} type={'secondary'} label={'delete'} onClick={()=>props.handleDeleteTeam(props._id)}/>
                     </div>
                 }
             </div>
@@ -224,10 +232,16 @@ const Team = (props) => {
                         </div>
                     </div>
                     <div className="TeamActions">
-                        <Button type={'secondary'} size={'full'} label={'create-random-team'} onClick={hanldeRandomClicked}/>
-                        <Button type={'secondary'} disabled={teams.length === 0} size={'full'} label={'show-analyse-team'} onClick={()=>handleAnalyseClicked(props.team)}/>
-                        <Button type={'secondary'} disabled={props.team.length === 0 || name === ""} size={'full'} label={'save-team'} onClick={handleSaveClicked}/>
-                        <Button type={'secondary'} size={'full'} label={'view-teams'} onClick={handleMenuStateChanged}/>
+                        <Button type={'secondary'} icon={SwitchIcon} size={'full'} label={'create-random-team'} onClick={hanldeRandomClicked}/>
+                        <Button type={'secondary'} icon={AnalyseIcon} disabled={teams.length === 0} size={'full'} label={'show-analyse-team'} onClick={()=>handleAnalyseClicked(props.team)}/>
+                        <Button type={'secondary'} icon={SaveIcon} disabled={props.team.length === 0 || name === ""} size={'full'} label={'save-team'} onClick={handleSaveClicked}/>
+                        <Button type={'secondary'} icon={ExtendIcon} size={'full'} label={'view-teams'} onClick={handleMenuStateChanged}/>
+                    </div>
+                    <div className="TeamActionsMobile">
+                        <Button type={'secondary'} size={'full'} icon={SwitchIcon} onClick={hanldeRandomClicked}/>
+                        <Button type={'secondary'} disabled={teams.length === 0} size={'full'} icon={AnalyseIcon} onClick={()=>handleAnalyseClicked(props.team)}/>
+                        <Button type={'secondary'} disabled={props.team.length === 0 || name === ""} size={'full'} icon={SaveIcon} onClick={handleSaveClicked}/>
+                        <Button type={'secondary'} size={'full'} icon={ExtendIcon} onClick={handleMenuStateChanged}/>
                     </div>
                 </div>
             </div>

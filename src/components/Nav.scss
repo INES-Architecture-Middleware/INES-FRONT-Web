@@ -76,6 +76,8 @@
 
 @media screen and (max-width : 1024px){
     .Nav {
+        padding: 0 30px;
+
         .NavContent{
             position: fixed;
             top: 80px;
@@ -118,6 +120,8 @@
 
 @media screen and (max-width : 650px){
     .Nav{
+        padding: 0 20px;
+
         .NavHeader{
             .NavTitle{
                 display: none;

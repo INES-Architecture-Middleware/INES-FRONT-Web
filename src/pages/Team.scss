@@ -18,13 +18,13 @@
         padding: 20px;
         width: 400px;
         display: flex;
+        overflow: auto;
         flex-direction: column;
         justify-content: space-between;
         gap: 20px;
 
         &.secondary{
             background-color: var(--components);
-            overflow-y: auto;
         }
 
         .TeamContent{
@@ -102,11 +102,17 @@
             }
         }
 
-        .TeamActions{
+        .TeamActions, .TeamActionsMobile{
             display: flex;
             flex-direction: column;
             gap: 10px;
             flex-shrink: 0;
+            width: 100%;
+            align-items: center;
+        }
+
+        .TeamActionsMobile{
+            display: none;
         }
     }
 }
@@ -178,7 +184,79 @@
 
         .ActionsRow{
             display: flex;
+            flex-wrap: nowrap;
             gap: 5px;
+        }
+    }
+}
+
+@media screen and (max-width : 1024px){
+    .Team {
+        transform: translateX(calc(-100% + 75px));
+
+        .TeamContainer{
+            width: 75px;
+            padding: 10px;
+
+            /* width */
+            &::-webkit-scrollbar {
+                width: 4px;
+            }
+
+            &.secondary{
+                padding: 20px;
+                width: 400px;
+            }
+
+            .TeamHeader{
+                display: none;
+            }
+
+            .TeamCases{
+                grid-template-columns: repeat(auto-fill, minmax(55px, 1fr));
+                grid-gap: 10px; 
+            }
+
+            .TeamActionsMobile{
+                display: flex;
+            }
+
+            .TeamActions{
+                display: none;
+            }
+        }
+    }
+}
+
+@media screen and (max-width:650px){
+    .Team {
+        transform: translateX(calc(-100% + 55px));
+
+        .TeamContainer{
+            width: 55px;
+            padding: 10px 5px;
+
+            &.secondary{
+                padding: 10px;
+                width: calc(100dvw - 55px)!important;
+            }
+
+            .TeamHeader{
+                display: none;
+            }
+
+            .TeamCases{
+                grid-template-columns: repeat(auto-fill, minmax(45px, 1fr));
+                grid-gap: 5px; 
+            }
+
+            .TeamActionsMobile{
+                display: flex;
+            }
+
+            .TeamActions{
+                display: none;
+            }
         }
     }
 }

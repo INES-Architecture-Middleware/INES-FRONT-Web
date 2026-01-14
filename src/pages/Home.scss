@@ -35,6 +35,8 @@
     .Home{
         .HomeContainer{
             padding: 20px;
+            width: calc(100% - 75px);
+            margin-left: 75px;
 
             .SearchContainer{
                 margin-bottom: 20px;
@@ -51,9 +53,13 @@
 @media screen and (max-width : 650px){
     .Home{
         .HomeContainer{
+            padding: 10px;
+            width: calc(100% - 55px);
+            margin-left: 55px;
+
             .PokemonList{
-                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-                // grid-gap: 10px;
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+                grid-gap: 10px;
             }
         }
     }
