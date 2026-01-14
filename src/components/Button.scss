@@ -20,6 +20,10 @@
         }
     }
 
+    &.full{
+        width: 100%;
+    }
+
     &:hover{
         opacity: .9;
     }
@@ -50,7 +54,7 @@
         border: 2px solid var(--borders);
 
         &.hover{
-            opacity: .6;
+            opacity: .3;
         }
     }
 

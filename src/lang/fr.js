@@ -75,8 +75,21 @@ export const fr = {
     "my-teams":"Mes teams",
     "create-team":"Création d'une team",
     "create-team-description":"Cliquez sur le bouton \"+\" pour ajouter un pokémon",
-    "team-empty":"Vous n'avez aucune team.",
+    "team-empty":"Vous n'avez aucune team",
     "team-create":"Créer une team",
+    "new-team":"Nouvelle team",
+    "create-random-team":"Créer une team aléatoire",
+    "show-analyse-team":"Voir l'analyse de la team",
+    "save-team":"Sauvegarder la team",
+    "view-teams":"Voir les teams",
+    "team-name":"Nom de la team",
+    "team-name-placeholder":"Exemple : team sun",
+    "search-team":"Rechercher une team",
+    "edit-team":"Édition d'une team",
+    "cancel-edition":"Annuler l'édition",
+    "editing":"En cours d'édition",
+
+    // COMMONS
 
     "login":"Se connecter",
     "register":"S'inscrire",
@@ -84,5 +97,7 @@ export const fr = {
     "name":"Nom de votre team",
     "validate":"Valider",
     "save":"Sauvegarder",
-    "cancel":"Annuler"
+    "cancel":"Annuler",
+    "edit":"Éditer",
+    "delete":"Supprimer",
 }

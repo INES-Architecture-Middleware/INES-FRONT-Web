@@ -1,45 +1,41 @@
-import { useEffect, useState } from 'react'
-import Heading from '../components/Heading'
-import './Team.scss'
-import { useIntl } from 'react-intl'
-import Body from '../components/Body'
-import Button from '../components/Button'
-import Logo from './../assets/logo.svg'
-import Input from '../components/Input'
-import TrashWhite from './../assets/trash-white.svg'
-import EditWhite from './../assets/edit-white.svg'
-import Request from '../utils/Request'
-import Loader from '../components/Loader'
+import React, { useEffect, useState } from "react"
+import Heading from "../components/Heading"
+import Input from "../components/Input"
+import "./Team.scss"
+import { useIntl } from "react-intl"
+import Button from "../components/Button"
+import Pokeball from "../components/Pokeball"
+import { colorType } from "../utils/helpers"
+import PlusIcon from "./../assets/plus-white.svg"
+import Request from "../utils/Request"
+import Body from "../components/Body"
 
-
-const TeamView = (props) => {
+const TeamDetails = (props) => {
     const intl = useIntl()
 
-    const [name, setName] = useState("")
-
     return (
-        <div className="TeamView">
-            <div className="TeamViewTitle">
-                <Heading size={'h6'}>{intl.formatMessage({id:"create-team"})}</Heading>
-                <Body size={'h6'}>{intl.formatMessage({id:"create-team-description"})}</Body>
-                {!props.edit && <Input value={name} onChange={setName} placeholder={"name"}/>}
+        <div className={"TeamDetails" + (props.selected && props.selected !== props._id ? " disabled" : "")}>
+            <div className="TeamDetailsHeader">
+                <Heading size={'h6'}>{props.name}</Heading>
+                {props.selected && props._id === props.selected && <Body size={'small'} weight={'light'} primary>{intl.formatMessage({id:"editing"})}</Body>}
             </div>
-            <div className="TeamViewContent">
+            <div className="TeamDetail">
+                {props.pokemons_id.map((pokemon, id) => (
+                    <div className="TeamDetailSprite" key={props._id + "-sprite-" + id}>
+                        <img src={pokemon.sprites.front_default}/>
+                    </div>
+                ))}
+            </div>
+            <div className="TeamDetailsActions">
+                <Button size={'full'} type={'secondary'} label={'show-analyse-team'} onClick={()=>props.handleAnalyseClicked(props)}/>
                 {
-                    Array.from({length:6}).map((_, id) => (
-                        <div key={"pokemon"+id} className="PokemonContent">
-                            <img src={Logo} alt="Logo" />
-                            {props.newTeam && props.newTeam.length > id && <div className="Sprite" onClick={()=>props.removeToTeam(id)}>
-                                <img src={props.newTeam[id].sprites.front_default} alt="Sprite du pokémon" />
-                            </div> }
-                        </div>
-                    ))
+                    props.selected && props._id === props.selected ?
+                    <Button size={'full'} type={'secondary'} label={'cancel-edition'} onClick={()=>props.handleEditTeam(props)}/>
+                    :<div className="ActionsRow">
+                        <Button size={'full'} type={'secondary'} label={'edit'} onClick={()=>props.handleEditTeam(props)}/>
+                        <Button size={'full'} type={'secondary'} label={'delete'} onClick={()=>props.handleDeleteTeam(props._id)}/>
+                    </div>
                 }
-            </div>
-            <div className="TeamViewOptions">
-                {/* <Button size={'medium'} label={'view-team-analyse'} onClick={()=>{console.log("view team analyse")}}/> */}
-                <Button size={'large'} disabled={(name === '' && !props.edit) || props.newTeam.length === 0} label={'save'} onClick={()=>{props.saveTeam({name:name})}}/>
-                <Button size={'large'} type={'secondary'} label={'cancel'} onClick={props.onCancel}/>
             </div>
         </div>
     )
@@ -48,84 +44,194 @@ const TeamView = (props) => {
 const Team = (props) => {
     const intl = useIntl()
 
-    const [logged, setLogged] = useState(false)
-    const [currentPage, setCurrentPage] = useState("home")
-    const [fetchingData, setFetchingData] = useState(false)
-    const [editedTeam, setEditedTeam] = useState(null)
+    const [name, setName] = useState("")
+    const [menuOpened, setMenuOpened] = useState(false)
+    const [search, setSearch] = useState("")
+    const [teams, setTeams] = useState([])
+    const [filteredTeam, setFilteredTeam] = useState([])
+    const [selectedTeam, setSelectedTeam] = useState(null)
+
+    const fetchList = async (team) => {
+        return new Promise((resolve, reject) => {
+            Request.post('/pokemon/list', { ids:team.pokemons_id }).then((res) => {
+                if(res && res.length > 0){
+                    resolve(res)
+                }else reject("Res empty")
+            }).catch(err => {
+                reject(err)
+            })
+        })
+    }
+
+    const fetchTeams = () => {
+        let userId = window.localStorage.getItem('userId')
+        if(userId){
+            Request.get('/team?userId='+userId).then(async res => {
+                const teamsTmp = []
+                for(const team of res){
+                    try{
+                        const pokemons = await fetchList(team)
+                        teamsTmp.push({
+                            ...team,
+                            pokemons_id:pokemons
+                        })
+                    }catch(err){
+                        console.log(err)
+                    }
+                }
+                setTeams(teamsTmp.filter(t => search ? search === t.name : t))
+            }).catch(err => {
+                console.log(err)
+            }) 
+        }
+    }
 
     useEffect(()=>{
-        if(window.localStorage.getItem('authToken')) setLogged(true)
+        fetchTeams()
     }, [])
 
-    const onCancel = () => {
-        setCurrentPage("home")
-        props.setTeam([])
+    useEffect(()=>{
+        setFilteredTeam(teams.filter(t => search !== "" ? t.name.toLowerCase().includes(search.toLowerCase()) : t))
+    }, [teams, search])
+
+    const resetTeam = () => {
+        setSelectedTeam(null)
+        setName('')
+        props.resetTeam()
     }
 
-    const onSave = (team) => {
-        setCurrentPage('home')
-        if(props.saveTeam) props.saveTeam(editedTeam ? editedTeam : team)
+    const handleAnalyseClicked = (team) => {
+        console.log("analysed")
     }
 
-    const onEdit = async (team) => {
-        setFetchingData(true)
-        let teamTmp = []
-        if(team && team.pokemons_id){
-            for(const pokemonId of team.pokemons_id){
-                try{
-                    teamTmp.push(await Request.get('/pokemon/'+pokemonId))
-                }catch(err){
-                    console.log(err)
-                    return
+    const hanldeRandomClicked = () => {
+        console.log("random")
+    }
+
+    const handleSaveClicked = () => {
+        let userId = window.localStorage.getItem('userId')
+        if(selectedTeam){
+            Request.put('/team', {
+                _id:selectedTeam,
+                name:name,
+                pokemonIds:props.team.map(t => t.id),
+                user:{
+                    _id:userId,
                 }
-            }
-            props.setTeam(teamTmp)
-            setEditedTeam(team)
+            }).then(res => {
+                fetchTeams()
+                resetTeam()
+            }).catch(err => {
+                console.log(err)
+                return
+            })
+        }else{
+            Request.post('/team', {
+                name:name,
+                pokemonIds:props.team.map(t => t.id),
+                user:{
+                    _id:userId,
+                }
+            }).then(res => {
+                fetchTeams()
+                resetTeam()
+            }).catch(err => {
+                console.log(err)
+                return
+            })
         }
-        setCurrentPage("edit")
-        setFetchingData(false)
+    }
+
+    const handleMenuStateChanged = () => {
+        setMenuOpened(!menuOpened)
+    }
+
+    const handleEditTeam = (team) => {
+        if(selectedTeam && team._id === selectedTeam){
+            resetTeam()
+        }else{
+            setSelectedTeam(team._id)
+            setName(team.name)
+            props.editTeam(team.pokemons_id)
+        }
+    }
+
+    const handleDeleteTeam = (id) => {
+        Request.delete('/team/'+id).then(res => {
+            fetchTeams()
+        }).catch(err => {
+            console.log(err)
+            return
+        })
     }
 
     return (
-        <div className="Team">
-            {
-                fetchingData ? <Loader/>
-                : logged && currentPage === "home" ? 
-                <div className="TeamContainer">
-                    <div className="TeamTitle">
-                        <Heading size={'h2'}>{intl.formatMessage({id:'my-teams'})}</Heading>
-                    </div>
+        <>
+            <div className={"TeamOpacity" + (menuOpened ? " opened" : "")} onClick={()=>setMenuOpened(false)}/>
+            <div className={"Team" + (menuOpened ? " opened" : "")}>
+                <div className="TeamContainer secondary">
                     <div className="TeamContent">
-                        {props.teams.length === 0 ? 
-                        <div className="TeamEmpty">
-                            <Body>{intl.formatMessage({id:"team-empty"})}</Body>
-                            <Button label={'team-create'} onClick={()=>{setCurrentPage('create')}}/>
-                        </div> 
-                        :
-                        <>
-                            {props.teams.map((t, id) => (
-                                <div key={'team-' + id} className="TeamCase">
-                                    <Body>{t.name}</Body>
-                                    <div className="Buttons">
-                                        <div className="ButtonIcon" onClick={()=>{onEdit(t)}}>
-                                            <img src={EditWhite} alt="Edit icon" />
-                                        </div>
-                                        <div className="ButtonIcon" onClick={()=>{props.deleteTeam(t)}}>
-                                            <img src={TrashWhite} alt="Trash icon" />
-                                        </div>
-                                    </div>
-                                </div>  
-                            ))}
-                            <div className="ButtonContent" style={{marginTop:20}}>
-                                <Button label={'team-create'} onClick={()=>{setCurrentPage('create')}}/>
+                        <div className="TeamHeader">
+                            <div className="Title">
+                                <Heading size={'h6'}>{intl.formatMessage({id:"my-teams"})}</Heading>
                             </div>
-                        </>}
+                            <div className="SearchContainer">
+                                <Input disabled={selectedTeam} type={'search'} placeholder={'search-team'} value={search} onChange={(str) => {setSearch(str)}} />
+                                <div className="ButtonContainer">
+                                    <Button icon={PlusIcon} type={"secondary"} onClick={resetTeam} />
+                                </div>
+                            </div>
+                        </div>
+                        <div className="Teams">
+                            {teams.length === 0 ?
+                            <Body>{intl.formatMessage({id:"team-empty"})}</Body>
+                            :filteredTeam.length === 0 ?
+                            <Body>{intl.formatMessage({id:"search-empty"})}</Body>
+                            :filteredTeam.map((team, teamId) => (
+                                <React.Fragment key={'team-' + teamId}>
+                                    <TeamDetails 
+                                        {...team} 
+                                        selected={selectedTeam}
+                                        handleAnalyseClicked={handleAnalyseClicked} 
+                                        handleEditTeam={handleEditTeam} 
+                                        handleDeleteTeam={handleDeleteTeam}
+                                    />
+                                    {teamId !== filteredTeam.length -1 && <div className="Divider"/>}                        
+                                </React.Fragment>
+                            ))}
+                        </div>
                     </div>
                 </div>
-                :<TeamView removeToTeam={props.removeToTeam} onCancel={onCancel} edit={currentPage === "edit"} saveTeam={onSave} newTeam={props.newTeam} setTeam={props.setTeam}/>
-            }
-            
-        </div>
+                <div className="TeamContainer">
+                    <div className="TeamContent">
+                        <div className="TeamHeader">
+                            <div className="Title">
+                                <Heading size={'h4'}>{intl.formatMessage({id:selectedTeam ? "edit-team" : "new-team"})}</Heading>
+                            </div>
+                            <div className="TeamName">
+                                <Input title={'team-name'} placeholder={"team-name-placeholder"} value={name} onChange={(str) => {setName(str)}}/>
+                            </div>
+                        </div>
+                        <div className="TeamCases">
+                            {Array.from({length:6}).map((_, id) => (
+                                <div className="TeamCase" key={"pokeball-"+id}>
+                                    <Pokeball color={(props.team && props.team.length > id) ? colorType(props.team[id].types[0].en) : undefined}/>
+                                    {(props.team && props.team.length > id) && <div className="SpriteContent" onClick={()=>props.removeToTeam(id)}>
+                                        <img src={props.team[id].sprites?.front_default} alt="Sprite"/>
+                                    </div>}
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                    <div className="TeamActions">
+                        <Button type={'secondary'} size={'full'} label={'create-random-team'} onClick={hanldeRandomClicked}/>
+                        <Button type={'secondary'} disabled={teams.length === 0} size={'full'} label={'show-analyse-team'} onClick={()=>handleAnalyseClicked(props.team)}/>
+                        <Button type={'secondary'} disabled={props.team.length === 0 || name === ""} size={'full'} label={'save-team'} onClick={handleSaveClicked}/>
+                        <Button type={'secondary'} size={'full'} label={'view-teams'} onClick={handleMenuStateChanged}/>
+                    </div>
+                </div>
+            </div>
+        </>
     )
 }
 

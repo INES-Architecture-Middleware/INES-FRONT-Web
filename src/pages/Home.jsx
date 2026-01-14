@@ -8,6 +8,7 @@ import Input from "../components/Input";
 import PokemonPopup from "../components/PokemonPopup";
 import InfiniteScroll from 'react-infinite-scroll-component';
 import PopupContext from "../contexts/PopupContext";
+import Team from "./Team";
 
 const PokemonList = (props) => {
 
@@ -16,7 +17,7 @@ const PokemonList = (props) => {
     return (
         <div className="PokemonList">
                 {props.data.map((pokemon, idPokemon) => (
-                    <PokemonCase addToTeam={()=>{props.addToTeam(pokemon)}} key={'Pokemon-'+idPokemon} {...pokemon} onClick={()=>props.handleItemClick(pokemon)}/>
+                    <PokemonCase disabled={props.disabled} addToTeam={()=>{props.addToTeam(pokemon)}} key={'Pokemon-'+idPokemon} {...pokemon} onClick={()=>props.handleItemClick(pokemon)}/>
                 ))}
                 <InfiniteScroll
                     dataLength={props.data.length} //This is important field to render the next data
@@ -41,6 +42,8 @@ const Home = (props) => {
     const [pageSize, setPageSize] = useState("0")
     const [search, setSearch] = useState("")
     const [fetching, setFetching] = useState(false)
+
+    const [team, setTeam] = useState([])
 
     const ref = useRef()
 
@@ -84,13 +87,45 @@ const Home = (props) => {
         openPopup(<PokemonPopup pokemon={pokemon} closePopup={closePopup}/>)
     }
 
+    const addToTeam = (pokemon) => {
+        if(pokemon){
+            const teamTmp = [...team]
+            if(teamTmp.length < 6) teamTmp.push(pokemon)
+            else console.log("Team to large")
+            setTeam(teamTmp)
+        }
+    }
+
+    const removeToTeam = (id) => {
+        if(id < 6 && id >= 0 && id < team.length){
+            const teamTmp = [...team]
+            teamTmp.splice(id, 1)
+            setTeam(teamTmp)
+        }
+    }
+
+    const editTeam = (_team) => {
+        if(_team && _team.length > 0 && _team.length <= 6){
+            setTeam(_team)
+        }
+    }
+
+    const resetTeam = () => {
+        setTeam([])
+    }
+
     return (
         <div className="Home">
+            <Team 
+                team={team} 
+                removeToTeam={removeToTeam}
+                resetTeam={resetTeam}
+                editTeam={editTeam}
+            />
             <div className="HomeContainer" ref={ref} id={"scrollableDiv"}>
                 <div className="SearchContainer">
                     <Input placeholder={"search-pokemon"} type={'search'} value={search} onChange={(e)=>{setSearch(e)}}/>
                 </div>
-
                 <div className="HomeContent">
                     {!data || fetching ? 
                         <Loader/>: 
@@ -99,6 +134,8 @@ const Home = (props) => {
                             data={data} 
                             dataLength={dataLength}
                             handleItemClick={handlePokemonClick}
+                            addToTeam={addToTeam}
+                            disabled={team.length === 6}
                         />
                     }
                 </div>

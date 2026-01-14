@@ -9,6 +9,7 @@ const Button = (props) => {
     const [hover, setHover] = useState(false)
 
     const handleClick = (e) => {
+        if(props.stopPropagation) e.stopPropagation()
         if(props.onClick && !props.disabled) props.onClick(e)
     }
 

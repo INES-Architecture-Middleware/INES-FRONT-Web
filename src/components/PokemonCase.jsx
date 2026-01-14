@@ -25,7 +25,7 @@ const PokemonCase = (props) => {
                     <Body center>{props.names.fr}</Body>
                     <Body secondary center weight={'thin'} size={'small'}>{props.names.en}</Body>
                 </div>
-                <Button icon={PlusWhiteIcon} size={'small'} type={'secondary'} onClick={(e) => handleButtonClick(e)}/>
+                <Button stopPropagation disabled={props.disabled} icon={PlusWhiteIcon} size={'small'} type={'secondary'} onClick={(e) => handleButtonClick(e)}/>
             </div>
         </div>
     )
