@@ -1,150 +1,427 @@
 .PokemonPopup{
-    width: 90vw;
-    height: 90vh;
-    border-radius: 20px;
+    width: 100dvw;
+    height: 100dvh;
+    display: flex;
+    justify-content: center;
+    overflow-y: auto;
     background-color: var(--background);
 
     .PokemonPopupContainer{
         width: 100%;
-        height: 100%;
-        position: relative;
+        max-width: 1600px;
+        display: flex;
+        flex-direction: column;
+    }
 
-        .PokemonPopupHeader{
-            width: 100%;
-            height: 100px;
-            border-top-left-radius: 20px;
-            border-top-right-radius: 20px;
+    .PokemonPopupScroll{
+        padding: 20px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .PokemonPopupHeader{
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        padding: 15px 30px;
+        align-items: center;
+        background-color: var(--components);
+        border-radius: 5px;
+        height: 100px;
+
+        .PopupTitle{
             display: flex;
+            gap: 25px;
+            height: 100%;
             align-items: center;
-            padding: 0 30px;
-            justify-content: space-between;
 
-            .Cross{
-                width: 40px;
-                cursor: pointer;
-                height: 40px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-
-                img{
-                    width: 100%;
-                    pointer-events: none;
-                }
+            .divider{
+                width: 2px;
+                flex-shrink: 0;
+                background-color: var(--borders);
+                height: 100%;
+                border-radius: 15px;
             }
         }
+    }
 
-        .PokemonInfosContainer{
+    .PokemonPopupContent{
+        width: 100%;
+        flex-grow: 1;
+        display: flex;
+        flex-shrink: 0;
+        gap: 20px;
+
+        .PokemonBand{
+            max-width: 400px;
             width: 100%;
-            height: calc(100% - 100px);
+            gap: 20px;
             display: flex;
+            flex-direction: column;
 
-            .PokemonDetails {
-                width: 350px;
-                height: 100%;
+            .PokemonHeader{
                 display: flex;
                 flex-direction: column;
-                background-color: var(--components);
+                gap: 10px;
 
                 .PokemonImage{
                     width: 100%;
+                    max-width: 400px;
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    padding: 30px;
-                    padding-bottom: 0;
 
                     img{
-                        pointer-events: none;
                         width: 100%;
+                        pointer-events: none;
                     }
                 }
 
                 .PokemonTypes{
+                    width: 100%;
+                    gap: 20px;
                     display: flex;
-                    gap: 30px;
                     align-items: center;
                     justify-content: center;
                 }
+            }
 
-                .PokemonInfos{
-                    width: 100%;
-                    flex-grow: 1;
-                    padding: 15px;
-                    padding-top: 25px;
+            .PokemonDetails{
+                display: flex;
+                flex-direction: column;
+                flex-grow: 1;
+                gap: 10px;
+
+                .PokemonDetail{
                     display: flex;
                     gap: 10px;
-                    flex-direction: column;
 
-                    .PokemonInfo{
-                        width: 100%;
+                    .Detail{
+                        border-radius: 5px;
+                        padding: 10px;
+                        gap: 4px;
                         display: flex;
-                        flex-direction: row;
-                        border-radius: 20px;
+                        flex-direction: column;
+                        justify-content: center;
+                    }
+
+                    .DetailHeader{
+                        flex-shrink: 0;
+                        width: 150px;
+                    }
+
+                    .DetailContent{
                         flex-grow: 1;
-                        border: 1px solid var(--borders);
-
-                        .InfoTitle{
-                            border-top-left-radius: 20px;
-                            border-bottom-left-radius: 20px;
-                            width: 40%;
-                            display: flex;
-                            padding: 20px;
-                            align-items: center;
-                            justify-content: center;
-                        }
-
-                        .InfoContent{
-                            flex-grow: 1;
-                            display: flex;
-                            padding: 0 20px;
-                            gap: 5px;
-                            flex-direction: column;
-                            align-items: center;
-                            justify-content: center;
-                        }
+                        background-color: var(--components);
                     }
                 }
             }
+        }
+        
+        .PokemonAttributes{
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            
+            .AttributesTable{
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
 
-            .PokemonStats{
-                padding: 30px;
-                width: 100%;
+                .AttributesHeader{
+                    width: 100%;
+                    padding: 15px;
+                    border-radius: 5px;
+                }
 
-                .SensibilitiesTable{
+                .TypesContainer{
+                    display: grid;
+                    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+                    grid-gap: 10px;
+                }
+
+                .AttributesContent{
                     display: flex;
                     flex-direction: column;
+                    gap: 10px;
                     width: 100%;
-                    padding-top: 20px;
 
-                    .TableHeader{
+                    .AttributeRow{
                         display: flex;
-                        align-items: center;
-                        padding: 10px 20px;
-                        border-top-left-radius: 5px;
-                        border-top-right-radius: 5px;
-                    }
-
-                    .TableContent{
-                        display: flex;
+                        gap: 10px;
                         width: 100%;
-                        flex-direction: column;
 
-                        .TableRow{
-                            width: 100%;
+                        &.inversed{
+                            .CaseHeader{
+                                max-width: 100%;
+                            }
+
+                            .CaseDetail{
+                                max-width: 125px;
+                            }
+                        }
+
+                        .Case{
+                            height: 40px;
+                            border-radius: 5px;
                             display: flex;
+                            align-items: center;
+                            padding: 10px;
+                            flex-grow: 1;
+                            background-color: var(--components);
+                        }
 
-                            .TableCase{
-                                width: 100%;
+                        .CaseHeader{
+                            max-width: 125px;
+                        }
+
+                        .CaseDetail{
+                            display: flex;
+                            align-items: center;
+                            gap: 20px;
+                            padding: 10px 20px;
+
+                            .StatGauge{
+                                flex-grow: 1;
+                                height: 100%;
                                 display: flex;
                                 align-items: center;
-                                height: 40px;
-                                justify-content: center;
+
+                                .bar{
+                                    background-color: var(--neutral100);
+                                    height: 100%;
+                                    border-radius: 3px;
+                                }
                             }
                         }
                     }
                 }
             }
         }
+    }
+
+    @media screen and (max-width : 1024px){
+        .PokemonPopupHeader{
+            height: 80px;
+            padding: 15px;
+
+            .PopupTitle{
+                gap: 15px;
+            }
+        }
+
+        .PokemonPopupContent{
+            flex-direction: column;
+            gap: 10px;
+
+            .PokemonBand{
+                max-width: 100%;
+
+                .PokemonHeader{
+                    align-items: center;
+                }
+            }
+
+            .PokemonAttributes{
+                gap: 10px;
+            }
+        }
+    }
+
+    @media screen and (max-width : 650px){
+        .PokemonPopupScroll{
+            padding: 10px;
+        }
+        
+        .PokemonPopupHeader{
+            height: 65px;
+        }
+
+        .PokemonPopupContent{
+            .PokemonBand{
+                .PokemonDetails{
+                    .PokemonDetail{
+                        .DetailHeader{
+                            width: 120px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // .PokemonPopupContainer{
+    //     width: 100%;
+    //     height: 100%;
+    //     position: relative;
+
+    //     .PokemonPopupHeader{
+    //         width: 100%;
+    //         height: 100px;
+    //         border-top-left-radius: 20px;
+    //         border-top-right-radius: 20px;
+    //         display: flex;
+    //         align-items: center;
+    //         padding: 0 30px;
+    //         justify-content: space-between;
+
+    //         .Cross{
+    //             width: 40px;
+    //             cursor: pointer;
+    //             height: 40px;
+    //             display: flex;
+    //             align-items: center;
+    //             justify-content: center;
+
+    //             img{
+    //                 width: 100%;
+    //                 pointer-events: none;
+    //             }
+    //         }
+    //     }
+
+    //     .PokemonInfosContainer{
+    //         width: 100%;
+    //         height: calc(100% - 100px);
+    //         display: flex;
+
+    //         .PokemonDetails {
+    //             width: 350px;
+    //             height: 100%;
+    //             display: flex;
+    //             flex-direction: column;
+    //             background-color: var(--components);
+
+    //             .PokemonImage{
+    //                 width: 100%;
+    //                 display: flex;
+    //                 align-items: center;
+    //                 justify-content: center;
+    //                 padding: 30px;
+    //                 padding-bottom: 0;
+
+    //                 img{
+    //                     pointer-events: none;
+    //                     width: 100%;
+    //                 }
+    //             }
+
+    //             .PokemonTypes{
+    //                 display: flex;
+    //                 gap: 30px;
+    //                 align-items: center;
+    //                 justify-content: center;
+    //             }
+
+    //             .PokemonInfos{
+    //                 width: 100%;
+    //                 flex-grow: 1;
+    //                 padding: 15px;
+    //                 padding-top: 25px;
+    //                 display: flex;
+    //                 gap: 10px;
+    //                 flex-direction: column;
+
+    //                 .PokemonInfo{
+    //                     width: 100%;
+    //                     display: flex;
+    //                     flex-direction: row;
+    //                     border-radius: 20px;
+    //                     flex-grow: 1;
+    //                     border: 1px solid var(--borders);
+
+    //                     .InfoTitle{
+    //                         border-top-left-radius: 20px;
+    //                         border-bottom-left-radius: 20px;
+    //                         width: 40%;
+    //                         display: flex;
+    //                         padding: 20px;
+    //                         align-items: center;
+    //                         justify-content: center;
+    //                     }
+
+    //                     .InfoContent{
+    //                         flex-grow: 1;
+    //                         display: flex;
+    //                         padding: 0 20px;
+    //                         gap: 5px;
+    //                         flex-direction: column;
+    //                         align-items: center;
+    //                         justify-content: center;
+    //                     }
+    //                 }
+    //             }
+    //         }
+
+    //         .PokemonStats{
+    //             padding: 30px;
+    //             width: 100%;
+
+    //             .SensibilitiesTable{
+    //                 display: flex;
+    //                 flex-direction: column;
+    //                 width: 100%;
+    //                 padding-top: 20px;
+
+    //                 .TableHeader{
+    //                     display: flex;
+    //                     align-items: center;
+    //                     padding: 10px 20px;
+    //                     border-top-left-radius: 5px;
+    //                     border-top-right-radius: 5px;
+    //                 }
+
+    //                 .TableContent{
+    //                     display: flex;
+    //                     width: 100%;
+    //                     flex-direction: column;
+
+    //                     .TableRow{
+    //                         width: 100%;
+    //                         display: flex;
+
+    //                         .TableCase{
+    //                             width: 100%;
+    //                             display: flex;
+    //                             align-items: center;
+    //                             height: 40px;
+    //                             justify-content: center;
+    //                         }
+    //                     }
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
+}
+
+.TypeCase{
+    display: flex;
+    gap: 10px;
+
+    .TypeHeader{
+        border: 4px solid;
+        // min-width: 100px;
+        flex-grow: 1;
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        height: 55px;
+        background-color: var(--components);
+        border-radius: 5px;
+    }
+
+    .TypeContent{
+        height: 55px;
+        width: 60px;
+        background-color: var(--components);
+        border-radius: 5px;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 }

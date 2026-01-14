@@ -93,7 +93,6 @@ const types = {
 
 function calculerResistance(typesPokemon, typeAttaque) {
     let resistance = 1;
-
     typesPokemon.forEach(type => {
         if (types[type].immunites.includes(typeAttaque)) {
             resistance = 0;

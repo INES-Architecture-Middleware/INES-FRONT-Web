@@ -1,12 +1,13 @@
 import { useIntl } from "react-intl";
 import './Home.scss'
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import Request from "../utils/Request";
 import Loader from "../components/Loader";
 import PokemonCase from "../components/PokemonCase";
 import Input from "../components/Input";
 import PokemonPopup from "../components/PokemonPopup";
 import InfiniteScroll from 'react-infinite-scroll-component';
+import PopupContext from "../contexts/PopupContext";
 
 const PokemonList = (props) => {
 
@@ -15,7 +16,7 @@ const PokemonList = (props) => {
     return (
         <div className="PokemonList">
                 {props.data.map((pokemon, idPokemon) => (
-                    <PokemonCase addToTeam={()=>{props.addToTeam(pokemon)}} key={'Pokemon-'+idPokemon} {...pokemon} onClick={()=>handlePokemonClick(pokemon)}/>
+                    <PokemonCase addToTeam={()=>{props.addToTeam(pokemon)}} key={'Pokemon-'+idPokemon} {...pokemon} onClick={()=>props.handleItemClick(pokemon)}/>
                 ))}
                 <InfiniteScroll
                     dataLength={props.data.length} //This is important field to render the next data
@@ -45,6 +46,8 @@ const Home = (props) => {
 
     let timeout = useRef()
     let inputTimeout = useRef()
+
+    const {closePopup, openPopup} = useContext(PopupContext)
 
     useEffect(()=>{
         clearTimeout(inputTimeout.current)
@@ -78,11 +81,7 @@ const Home = (props) => {
     }, [])
 
     const handlePokemonClick = (pokemon) => {
-        props.changePopupState(true, <PokemonPopup pokemon={pokemon} closePopup={closePopup}/>)
-    }
-
-    const closePopup = () => {
-        props.changePopupState(false)
+        openPopup(<PokemonPopup pokemon={pokemon} closePopup={closePopup}/>)
     }
 
     return (
@@ -95,7 +94,12 @@ const Home = (props) => {
                 <div className="HomeContent">
                     {!data || fetching ? 
                         <Loader/>: 
-                        <PokemonList fetch={()=>{fetchPokemons({name:search})}} data={data} dataLength={dataLength}/>
+                        <PokemonList 
+                            fetch={()=>{fetchPokemons({name:search})}} 
+                            data={data} 
+                            dataLength={dataLength}
+                            handleItemClick={handlePokemonClick}
+                        />
                     }
                 </div>
             </div>

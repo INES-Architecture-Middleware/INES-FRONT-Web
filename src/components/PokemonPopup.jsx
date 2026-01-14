@@ -1,22 +1,36 @@
 import './PokemonPopup.scss'
-import CrossIcon from './../assets/cross.svg'
 import {useIntl} from 'react-intl'
 import CrossWhiteIcon from './../assets/cross-white.svg'
-import { useContext, useEffect, useState } from 'react';
-import ThemeContext from './ThemeContext';
+import { useEffect, useState } from 'react';
 import Heading from './Heading';
-import { colorResistance, colorType } from '../utils/helpers';
+import Button from './Button';
+import { calculateAveStats, calculateSumStats, colorResistance, colorType, fourDigitsString } from '../utils/helpers';
 import Body from './Body';
 import Type from './Type';
 import {calculerResistance, types} from '../data/types.js';
 
+const TypeCase = (props) => {
+    const intl = useIntl()
+    
+    const resistance = calculerResistance(props.types.map(f => f.en?.toLowerCase()), props.type)
+
+    return (
+        <div className="TypeCase">
+            <div className="TypeHeader" style={{borderColor:colorType(props.type)}}>
+                <Body size={'small'}>{intl.formatMessage({id:props.type})}</Body>
+            </div>
+            <div className="TypeContent">
+                <Body color={colorResistance(resistance)}>{intl.formatMessage({id:'r-'+resistance})}</Body>
+            </div>
+        </div>
+    )
+}
+
 const PokemonPopup = (props) => {
     const intl = useIntl(null)
     const [color, setColor] = useState("")
-    const { theme, toggleTheme, fetching } = useContext(ThemeContext);
 
     useEffect(()=>{
-        console.log()
         setColor(colorType(props.pokemon.types[0].fr))
     }, [])
 
@@ -27,78 +41,121 @@ const PokemonPopup = (props) => {
     return (
         <div className="PokemonPopup">
             <div className="PokemonPopupContainer">
-                <div className="PokemonPopupHeader" style={{backgroundColor:color}}>
-                    <div className="PopupTitle">
-                        <Heading size={'h2'}>{props.pokemon.names['fr']}</Heading>
+            <div className="PokemonPopupScroll">
+                <div className="PokemonPopupHeader">
+                    <div className="PopupTitle">                    
+                        <Heading size={'h3'}>{fourDigitsString(props.pokemon.id)}</Heading>
+                        <div className="divider"/>
+                        <div className="TitleNames">
+                            <Heading size={'h4'}>{props.pokemon.names['fr']}</Heading>
+                            <Body secondary weight={'light'}>{props.pokemon.names['en']}</Body>
+                        </div>
                     </div>
-                    <div className="Cross" onClick={closePopup}>
-                        <img src={theme === 'dark' ? CrossWhiteIcon : CrossIcon} alt="Cross icon" />
-                    </div>
+                    <Button size={'large'} type={'tercery'} icon={CrossWhiteIcon} onClick={closePopup} />
                 </div>
-                <div className="PokemonInfosContainer">
-                    <div className="PokemonDetails">
-                        <div className="PokemonImage">
-                            <img src={props.pokemon.sprites.official_artwork} alt="" />
-                        </div>
-                        <div className="PokemonTypes">
-                            {props.pokemon.types.map((type, id) => (
-                                <Type key={'type-'+id} type={type.fr}/>
-                            ))}
-                        </div>
-                        <div className="PokemonInfos">
-                            <div className="PokemonInfo">
-                                <div className="InfoTitle" style={{backgroundColor:color}}><Body right>{intl.formatMessage({id:"height"})}</Body></div>
-                                <div className="InfoContent"><Body>{intl.formatMessage({id:'height-m'}, {height:props.pokemon.height})}</Body></div>
+                <div className="PokemonPopupContent">
+                    <div className="PokemonBand">
+                        <div className="PokemonHeader">
+                            <div className="PokemonImage">
+                                <img src={props.pokemon.sprites.official_artwork}/>
                             </div>
-                            <div className="PokemonInfo">
-                                <div className="InfoTitle" style={{backgroundColor:color}}><Body right>{intl.formatMessage({id:"weight"})}</Body></div>
-                                <div className="InfoContent"><Body>{intl.formatMessage({id:'weight-kg'}, {weight:props.pokemon.weight})}</Body></div>
+                            <div className="PokemonTypes">
+                                {props.pokemon.types.map((type, id) => (
+                                    <Type key={'type-'+id} type={type.fr}/>
+                                ))}
                             </div>
-                            <div className="PokemonInfo">
-                                <div className="InfoTitle" style={{backgroundColor:color}}><Body right>{intl.formatMessage({id:"abilities"})}</Body></div>
-                                <div className="InfoContent">{
+                        </div>
+                        <div className="PokemonDetails">
+                            <div className="PokemonDetail">
+                                <div className="Detail DetailHeader" style={{backgroundColor:color}}>
+                                    <Body>{intl.formatMessage({id:'category'})}</Body>
+                                </div>
+                                <div className="Detail DetailContent">
+                                    <Body>{props.pokemon.category.fr}</Body>
+                                </div>
+                            </div>
+                            <div className="PokemonDetail">
+                                <div className="Detail DetailHeader" style={{backgroundColor:color}}>
+                                    <Body>{intl.formatMessage({id:'height'})}</Body>
+                                </div>
+                                <div className="Detail DetailContent">
+                                    <Body>{intl.formatMessage({id:'height-m'}, {height:props.pokemon.height})}</Body>
+                                </div>
+                            </div>
+                            <div className="PokemonDetail">
+                                <div className="Detail DetailHeader" style={{backgroundColor:color}}>
+                                    <Body>{intl.formatMessage({id:'weight'})}</Body>
+                                </div>
+                                <div className="Detail DetailContent">
+                                    <Body>{intl.formatMessage({id:'weight-kg'}, {weight:props.pokemon.weight})}</Body>
+                                </div>
+                            </div>
+                            <div className="PokemonDetail">
+                                <div className="Detail DetailHeader" style={{backgroundColor:color}}>
+                                    <Body>{intl.formatMessage({id:'abilities'})}</Body>
+                                </div>
+                                <div className="Detail DetailContent">{
                                     props.pokemon.abilities.map((ability, idAbility) => (
                                         <Body key={"ability-"+idAbility}>{ability.fr}</Body>
                                     ))
                                 }</div>
                             </div>
-                            <div className="PokemonInfo">
-                                <div className="InfoTitle" style={{backgroundColor:color}}><Body right>{intl.formatMessage({id:"egg-groups"})}</Body></div>
-                                <div className="InfoContent">{
+                            <div className="PokemonDetail">
+                                <div className="Detail DetailHeader" style={{backgroundColor:color}}>
+                                    <Body>{intl.formatMessage({id:'egg-groups'})}</Body>
+                                </div>
+                                <div className="Detail DetailContent">{
                                     props.pokemon.egg_groups.map((egg, idEgg) => (
                                         <Body key={"egg-"+idEgg}>{egg.fr}</Body>
                                     ))
-                                }</div>                           
+                                }</div>
                             </div>
                         </div>
                     </div>
-                    <div className="PokemonStats">
-                        <div className="StatsTitle">
-                            <Heading size={'h3'}>{intl.formatMessage({id:"stats-title"})}</Heading>
-                            <div className="SensibilitiesTable">
-                                <div className="TableHeader" style={{backgroundColor:color}}>
-                                    <Heading size={'h5'}>{intl.formatMessage({id:'sensibilities'})}</Heading>
+                    <div className="PokemonAttributes">
+                        <div className="AttributesTable">
+                            <div className="AttributesHeader" style={{backgroundColor:color}}>
+                                <Body>{intl.formatMessage({id:"vulnerabilities"})}</Body>
+                            </div>
+                            <div className="TypesContainer">
+                                {Object.keys(types).map((type, idType) => (
+                                    <TypeCase key={'table-case-' + idType} type={type} types={props.pokemon.types} properties={types[type]}/>
+                                ))}
+                            </div>
+                        </div>
+                        <div className="AttributesTable">
+                            <div className="AttributesHeader" style={{backgroundColor:color}}>
+                                <Body>{intl.formatMessage({id:"stats-title"})}</Body>
+                            </div>
+                            <div className="AttributesContent">
+                                <div className="AttributeRow">
+                                    <div className="Case CaseHeader" style={{backgroundColor:color}}><Body>{intl.formatMessage({id:"stats"})}</Body></div>
+                                    <div className="Case CaseDetail" style={{backgroundColor:color}}><Body>{intl.formatMessage({id:"base-stats"})}</Body></div>
                                 </div>
-                                <div className="TableContent">
-                                    <div className="TableRow">
-                                        {Object.keys(types).map((type, id) => (
-                                            <div key={'case-'+type} className="TableCase" style={{backgroundColor:colorType(type)}}>
-                                                {type && <Body center>{intl.formatMessage({id:type})}</Body>}
+                                {Object.keys(props.pokemon.stats).map((stat, idStat) => (
+                                    <div className="AttributeRow" key={"stat-"+stat + "-" + idStat}>
+                                        <div className="Case CaseHeader" style={{backgroundColor:color}}><Body>{intl.formatMessage({id:stat})}</Body></div>
+                                        <div className="Case CaseDetail">
+                                            <Body>{props.pokemon.stats[stat]}</Body>
+                                            <div className="StatGauge">
+                                                <div className="bar" style={{width:((100*props.pokemon.stats[stat])/200) + '%'}}/>
                                             </div>
-                                        ))}
+                                        </div>
                                     </div>
-                                    <div className="TableRow">
-                                        {Object.keys(types).map((type, id) => (
-                                            <div key={'case-'+type} className="TableCase" style={{backgroundColor:colorResistance(calculerResistance(props.pokemon.types.map(f => f.en), type), theme)}}>
-                                                {type && <Body weight={'thin'} black center>{intl.formatMessage({id:"r-" + calculerResistance(props.pokemon.types.map(f => f.en), type)})}</Body>}
-                                            </div>
-                                        ))}
-                                    </div>
+                                ))}
+                                <div className="AttributeRow inversed">
+                                    <div className="Case CaseHeader" style={{backgroundColor:color}}><Body>{intl.formatMessage({id:"stats-sum"})}</Body></div>
+                                    <div className="Case CaseDetail"><Body weight={'bold'}>{calculateSumStats(props.pokemon.stats)}</Body></div>
+                                </div>
+                                <div className="AttributeRow inversed">
+                                    <div className="Case CaseHeader" style={{backgroundColor:color}}><Body>{intl.formatMessage({id:"stats-ave"})}</Body></div>
+                                    <div className="Case CaseDetail"><Body weight={'bold'}>{calculateAveStats(props.pokemon.stats)}</Body></div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
             </div>
         </div>
     )

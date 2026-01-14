@@ -21,12 +21,38 @@ const colorType = (_type) => {
 }
 
 const colorResistance = (_resistance) => {
-    if(_resistance === 1) return "#ffffaa"
-    else if(_resistance === 0.5) return "#aaffaa"
-    else if(_resistance === 0.25) return "#3af24b"
-    else if(_resistance === 2) return "#3af24b"
-    else if(_resistance === 4) return "#ff5e4d"
-    else if(_resistance === 0) return "#cccccc"
+    if(_resistance === 1) return "#F9F9F9"
+    else if(_resistance === 0.5) return "#7BCA6C"
+    else if(_resistance === 0.25) return "#1A9037"
+    else if(_resistance === 2) return "#E45E5E"
+    else if(_resistance === 4) return "#973f36ff"
+    else if(_resistance === 0) return "#929292"
 }
 
-export {colorType, colorResistance}
+const fourDigitsString = (str) => {
+    let baseStr = String(str)
+    let res = ""
+    for(let i = 0; i < 4 - baseStr.length; i++) res += "0"
+    res += baseStr
+    return res
+}
+
+const calculateSumStats = (stats) => {
+    let sum = 0
+    for(const stat in stats){
+        sum += stats[stat]
+    }
+    return sum
+}
+
+const calculateAveStats = (stats) => {
+    let sum = 0
+    let count = 0
+    for(const stat in stats){
+        sum += stats[stat]
+        count += 1
+    }
+    return (sum/count).toFixed(2)
+}
+
+export {colorType, colorResistance, fourDigitsString, calculateSumStats, calculateAveStats}

@@ -25,7 +25,20 @@ export const fr = {
     "weight":"Poids",
     "weight-kg":"{weight} kg",
     "stats-title":"Statistiques",
-    "sensibilities":"Sensibilités",
+    "vulnerabilities":"Vulnérabilités",
+    "category":"Catégorie",
+
+    // STATS
+    'hp':"PV",
+    'attack':"ATK",
+    'defense':"DEF",
+    'special_attack':"SpA",
+    'special_defense':"SpD",
+    'speed':"Spe",
+    'base-stats':"Stats de base",
+    'stats':"Stats",
+    'stats-sum':"Somme des stats",
+    'stats-ave':"Moyenne des stats",
 
     //Types
 

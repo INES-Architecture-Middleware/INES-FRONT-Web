@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import {IntlProvider} from "react-intl";
-import { ThemeProvider } from './components/ThemeContext.jsx';
+import { PopupProvider } from './contexts/PopupContext.jsx';
 import './index.scss'
 
 import {en} from "./lang/en.js";
@@ -18,11 +18,11 @@ const language = navigator.language.split(/[-_]/)[0];
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <React.StrictMode>
-        <IntlProvider onError={()=>{}} locale={navigator.language} messages={messages[language]}>
-            <ThemeProvider>
+        <PopupProvider>
+            <IntlProvider onError={()=>{}} locale={navigator.language} messages={messages[language]}>
                 <App/>
-            </ThemeProvider>
-        </IntlProvider>
+            </IntlProvider>
+        </PopupProvider>
     </React.StrictMode>
 )
 

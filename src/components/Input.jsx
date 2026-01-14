@@ -4,12 +4,9 @@ import { useIntl } from 'react-intl'
 import SearchIcon from './../assets/search.svg'
 import SearcWhitehIcon from './../assets/search-white.svg'
 import Body from './Body'
-import ThemeContext from './ThemeContext'
 
 const Input = (props) => {
     const intl = useIntl()
-
-    const { theme, toggleTheme, fetching } = useContext(ThemeContext);
 
     let classNames = "Input" +
         (props.error ? ' error' : "")
@@ -32,7 +29,7 @@ const Input = (props) => {
                 :
                 <div className={"InputContent" + (props.type === "search" ? " search" : "") + (props.error ? " error" : "")}>
                     <input disabled={props.disabled} className={classNames} type={props.type ? props.type : 'text'} value={props.value} onKeyDown={handleKeyDown} onChange={handleValueChange} required={props.required} placeholder={props.placeholder ? intl.formatMessage({id:props.placeholder}) : ""}/>
-                    {props.type === "search" && <div className="SearchIcon"><img src={theme === "dark" ? SearcWhitehIcon : SearchIcon} alt="Search"/></div>}
+                    {props.type === "search" && <div className="SearchIcon"><img src={SearcWhitehIcon} alt="Search"/></div>}
                 </div>
             }
         </div>

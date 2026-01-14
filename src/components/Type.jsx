@@ -5,7 +5,7 @@ import './Type.scss'
 const Type = (props) => {
 
     return (
-        <div className="Type" style={{backgroundColor:colorType(props.type)}}>
+        <div className="Type" style={{borderColor:colorType(props.type)}}>
             <Body center>{props.type}</Body>
         </div>
     )

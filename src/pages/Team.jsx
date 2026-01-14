@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import Heading from '../components/Heading'
 import './Team.scss'
 import { useIntl } from 'react-intl'
@@ -6,11 +6,8 @@ import Body from '../components/Body'
 import Button from '../components/Button'
 import Logo from './../assets/logo.svg'
 import Input from '../components/Input'
-import Trash from './../assets/trash.svg'
 import TrashWhite from './../assets/trash-white.svg'
-import Edit from './../assets/edit.svg'
 import EditWhite from './../assets/edit-white.svg'
-import ThemeContext from '../components/ThemeContext'
 import Request from '../utils/Request'
 import Loader from '../components/Loader'
 
@@ -55,8 +52,6 @@ const Team = (props) => {
     const [currentPage, setCurrentPage] = useState("home")
     const [fetchingData, setFetchingData] = useState(false)
     const [editedTeam, setEditedTeam] = useState(null)
-
-    const { theme, toggleTheme, fetching } = useContext(ThemeContext);
 
     useEffect(()=>{
         if(window.localStorage.getItem('authToken')) setLogged(true)
@@ -113,10 +108,10 @@ const Team = (props) => {
                                     <Body>{t.name}</Body>
                                     <div className="Buttons">
                                         <div className="ButtonIcon" onClick={()=>{onEdit(t)}}>
-                                            <img src={theme === 'dark' ? EditWhite : Edit} alt="Edit icon" />
+                                            <img src={EditWhite} alt="Edit icon" />
                                         </div>
                                         <div className="ButtonIcon" onClick={()=>{props.deleteTeam(t)}}>
-                                            <img src={theme === 'dark' ? TrashWhite : Trash} alt="Trash icon" />
+                                            <img src={TrashWhite} alt="Trash icon" />
                                         </div>
                                     </div>
                                 </div>  

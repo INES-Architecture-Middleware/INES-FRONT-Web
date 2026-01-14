@@ -1,19 +1,15 @@
 
-import { useEffect, useState } from 'react'
+import { useContext } from 'react'
 import './Popup.scss'
+import PopupContext from '../contexts/PopupContext'
 
-const Popup = (props) => {
-    const [open, setOpen] = useState(false)
-
-    useEffect(()=>{
-        if(props.content) setOpen(true)
-        else setOpen(false)
-    }, [props.content])
+const Popup = () => {
+    const {content, open, full} = useContext(PopupContext)
 
     return (
-        <div className={'Popup' + (open ? " open" : "")}>
+        <div className={'Popup' + (open ? " open" : "") + (full ? " full" : "")}>
             <div className="PopupContent">
-                {props.content && props.content}
+                {content && content}
             </div>
         </div>
     )
