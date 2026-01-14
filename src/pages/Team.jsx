@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useContext, useEffect, useRef, useState } from "react"
 import Heading from "../components/Heading"
 import Input from "../components/Input"
 import "./Team.scss"
@@ -17,6 +17,7 @@ import TrashIcon from "./../assets/trash-white.svg"
 import EditIcon from "./../assets/edit-white.svg"
 import Request from "../utils/Request"
 import Body from "../components/Body"
+import PopupContext from '../contexts/PopupContext'
 
 const TeamDetails = (props) => {
     const intl = useIntl()
@@ -49,6 +50,32 @@ const TeamDetails = (props) => {
     )
 }
 
+const EditPopup = (props) =>{
+    const intl = useIntl()
+    const [value, setValue] = useState(props.value || "")
+
+    const save = () => {
+        if(props.save && value !== "") props.save(value)
+    }
+
+    return (
+        <div className="EditPopup">
+            {props.title && <div className="PopupContentHeader">
+                <div className="PopupTitle">
+                    <Heading size={'h4'}>{intl.formatMessage({id:props.title})}</Heading>
+                </div>
+            </div>}
+            <div className="PopupContent">
+                <Input title={'team-name'} placeholder={"team-name-placeholder"} value={value} onChange={(str) => {setValue(str)}}/>
+            </div>
+            <div className="PopupButtons">
+                <Button size={'full'} type={'secondary'} label={'cancel'} onClick={props.close} />
+                <Button size={'full'} disabled={value === ""} label={"validate"} onClick={save}/>
+            </div>
+        </div>
+    )
+}
+
 const Team = (props) => {
     const intl = useIntl()
 
@@ -58,6 +85,10 @@ const Team = (props) => {
     const [teams, setTeams] = useState([])
     const [filteredTeam, setFilteredTeam] = useState([])
     const [selectedTeam, setSelectedTeam] = useState(null)
+    const [isTablet, setIsTablet] = useState(window.innerWidth < 1024)
+    const isTabletRef = useRef(isTablet)
+
+    const { openPopup, closePopup } = useContext(PopupContext)
 
     const fetchList = async (team) => {
         return new Promise((resolve, reject) => {
@@ -96,11 +127,26 @@ const Team = (props) => {
 
     useEffect(()=>{
         fetchTeams()
+        window.addEventListener('resize', handleResize)
+
+        return () => {
+            window.removeEventListener('resize', handleResize)
+        }
     }, [])
 
     useEffect(()=>{
         setFilteredTeam(teams.filter(t => search !== "" ? t.name.toLowerCase().includes(search.toLowerCase()) : t))
     }, [teams, search])
+
+    const handleResize = (e) => {
+        if(!isTabletRef.current && e.target.innerWidth <= 1024){
+            isTabletRef.current = true
+            setIsTablet(true)
+        }else if(isTabletRef.current && e.target.innerWidth < 1024){
+            isTabletRef.current = false
+            setIsTablet(false)
+        }
+    }
 
     const resetTeam = () => {
         setSelectedTeam(null)
@@ -116,12 +162,13 @@ const Team = (props) => {
         console.log("random")
     }
 
-    const handleSaveClicked = () => {
+    const handleSaveClicked = (_name = null) => {
         let userId = window.localStorage.getItem('userId')
+        const nameTmp = _name || name
         if(selectedTeam){
             Request.put('/team', {
                 _id:selectedTeam,
-                name:name,
+                name:nameTmp,
                 pokemonIds:props.team.map(t => t.id),
                 user:{
                     _id:userId,
@@ -135,7 +182,7 @@ const Team = (props) => {
             })
         }else{
             Request.post('/team', {
-                name:name,
+                name:nameTmp,
                 pokemonIds:props.team.map(t => t.id),
                 user:{
                     _id:userId,
@@ -161,7 +208,17 @@ const Team = (props) => {
             setSelectedTeam(team._id)
             setName(team.name)
             props.editTeam(team.pokemons_id)
+            setMenuOpened(false)
         }
+    }
+
+    const handleChangeName = () => {
+        openPopup(<EditPopup
+            title={"choose-name"}
+            save={(str)=>{handleSaveClicked(str);closePopup()}}
+            close={closePopup}
+            value={name}
+        />)
     }
 
     const handleDeleteTeam = (id) => {
@@ -240,7 +297,7 @@ const Team = (props) => {
                     <div className="TeamActionsMobile">
                         <Button type={'secondary'} size={'full'} icon={SwitchIcon} onClick={hanldeRandomClicked}/>
                         <Button type={'secondary'} disabled={teams.length === 0} size={'full'} icon={AnalyseIcon} onClick={()=>handleAnalyseClicked(props.team)}/>
-                        <Button type={'secondary'} disabled={props.team.length === 0 || name === ""} size={'full'} icon={SaveIcon} onClick={handleSaveClicked}/>
+                        <Button type={'secondary'} disabled={props.team.length === 0} size={'full'} icon={SaveIcon} onClick={handleChangeName}/>
                         <Button type={'secondary'} size={'full'} icon={ExtendIcon} onClick={handleMenuStateChanged}/>
                     </div>
                 </div>

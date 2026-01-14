@@ -88,6 +88,7 @@ export const fr = {
     "edit-team":"Édition d'une team",
     "cancel-edition":"Annuler l'édition",
     "editing":"En cours d'édition",
+    "choose-name":"Choisir le nom de votre team",
 
     // COMMONS
 

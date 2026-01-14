@@ -17,18 +17,6 @@
         box-sizing: border-box;
     }
 
-    @media screen and (max-width : 1100px){
-        textarea{
-            font-size: 14px;
-        }
-    }
-
-    @media screen and (max-width : 650px){
-        textarea{
-            font-size: 12px;
-        }
-    }
-
     &.disabled{
         .InputContent{
             opacity: .5;
@@ -107,7 +95,7 @@
             opacity: 0;
         }
 
-        @media screen and (max-width : 1100px){
+        @media screen and (max-width : 1024px){
             input{
                 font-size: 14px;
             }
@@ -120,4 +108,22 @@
         }
     }
 
+    @media screen and (max-width : 1024px){
+        textarea{
+            font-size: 14px;
+        }
+        .InputContent{
+            height: 45px;
+        }
+    }
+
+    @media screen and (max-width : 650px){
+        textarea{
+            font-size: 12px;
+        }
+
+        .InputContent{
+            height: 40px;
+        }
+    }
 }

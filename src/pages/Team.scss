@@ -190,6 +190,24 @@
     }
 }
 
+.EditPopup{
+    width: calc(100dvw - 40px);
+    max-width: 400px;
+    background-color: var(--background);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    border-radius: 5px;
+
+    .PopupButtons{
+        display: flex;
+        // flex-direction: column;
+        gap: 10px;
+        margin: 5px 0;
+    }
+}
+
 @media screen and (max-width : 1024px){
     .Team {
         transform: translateX(calc(-100% + 75px));
@@ -206,6 +224,10 @@
             &.secondary{
                 padding: 20px;
                 width: 400px;
+
+                .TeamHeader{
+                    display: flex;
+                }
             }
 
             .TeamHeader{
