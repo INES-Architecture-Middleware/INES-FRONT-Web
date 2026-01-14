@@ -29,6 +29,10 @@ const Nav = (props) => {
         navigate('/login')
     }
 
+    const onLogoutClicked = () => {
+        props.logout()
+    }
+
     const handleResize = () => {
         if(openedRef.current) {
             setOpened(false)
@@ -56,10 +60,10 @@ const Nav = (props) => {
                         <Body overflow maxWidth={'100%'} weight={'bold'}>{window.localStorage.getItem("username") ? window.localStorage.getItem("username") : ""}</Body>
                     </div>
                     <div className="ButtonContainer">
-                        <Button type={'tercery'} icon={LogoutWhiteIcon} onClick={onLoginClicked}/>
+                        <Button type={'tercery'} icon={LogoutWhiteIcon} onClick={onLogoutClicked}/>
                     </div>
                     <div className="MobileButtonContainer">
-                        <Button type={'secondary'} label={'disconnect'} icon={LogoutWhiteIcon} onClick={onLoginClicked}/>
+                        <Button type={'secondary'} label={'disconnect'} icon={LogoutWhiteIcon} onClick={onLogoutClicked}/>
                     </div>
                 </>
                 :

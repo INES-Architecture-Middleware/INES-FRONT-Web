@@ -9,6 +9,7 @@ import PokemonPopup from "../components/PokemonPopup";
 import InfiniteScroll from 'react-infinite-scroll-component';
 import PopupContext from "../contexts/PopupContext";
 import Team from "./Team";
+import { useNavigate, useParams } from "react-router-dom";
 
 const PokemonList = (props) => {
 
@@ -44,6 +45,19 @@ const Home = (props) => {
     const [fetching, setFetching] = useState(false)
 
     const [team, setTeam] = useState([])
+
+    const params = useParams()
+    const navigate = useNavigate()
+
+    useEffect(()=>{
+        if(window.localStorage.getItem("current_team_name")) window.localStorage.removeItem("current_team_name")
+        if(window.localStorage.getItem("current_team_pokemons")) window.localStorage.removeItem("current_team_pokemons")
+    }, [])
+
+    useEffect(()=>{
+        let path = params['*']
+        if(path !== "" && path !== "home") navigate('/')
+    }, [params])
 
     const ref = useRef()
 
@@ -121,6 +135,7 @@ const Home = (props) => {
                 removeToTeam={removeToTeam}
                 resetTeam={resetTeam}
                 editTeam={editTeam}
+                logged={props.logged}
             />
             <div className="HomeContainer" ref={ref} id={"scrollableDiv"}>
                 <div className="SearchContainer">

@@ -11,36 +11,47 @@ import Request from '../utils/Request'
 function App() {
   const [logged, setLogged] = useState(null)
 
-  useEffect(()=>{
-    const authToken = window.localStorage.getItem("authToken")
-    if(authToken) {
-      setLogged(true)
-    }
-    else setLogged(false)
-  }, [])
-
-//   useEffect(()=>{
-//     let path = params['*']
-
-//     switch (path) {
-//       case "home":
-//         if(currentPage !== "home"){
-//           setCurrentPage("home")
-//           navigate('/home')
-//         }
-//         break;
-//       default :
-//         if(currentPage !== "home"){
-//           setCurrentPage("home")
-//           navigate('/')
-//         }
-//     }
-//   }, [params])
+    useEffect(()=>{
+        const authToken = window.localStorage.getItem("authToken")
+        if(authToken) {
+            Request.get('/me').then((res) => {
+                window.localStorage.setItem("userId", res._id)
+                window.localStorage.setItem("username", res.username)
+                setLogged(true)
+            }).catch(err => {
+                window.localStorage.removeItem("authToken")
+                window.localStorage.removeItem("username")
+                window.localStorage.removeItem("userId")
+                setLogged(false)
+            })
+        }
+        else setLogged(false)
+    }, [])
 
     const login = (token, userId, username) => {
         window.localStorage.setItem("authToken", token)
         window.localStorage.setItem("userId", userId)
         window.localStorage.setItem("username", username)
+
+        if(window.localStorage.getItem("current_team_name") && window.localStorage.getItem("current_team_pokemons")){
+            const name = window.localStorage.getItem("current_team_name")
+            const team = window.localStorage.getItem("current_team_pokemons")
+            const teamParse = JSON.parse(team)
+
+            Request.post('/team', {
+                name:name,
+                pokemonIds:teamParse,
+                user:{
+                    _id:userId,
+                }
+            }).then(res => {
+                window.localStorage.removeItem("current_team_name")
+                window.localStorage.removeItem("current_team_pokemons")
+            }).catch(err => {
+                console.log(err)
+            })
+        }
+
         setLogged(true)
     }
 
@@ -57,13 +68,15 @@ function App() {
                     <Route path={'/*'} element={<div className='AppContainer'>
                         <Nav logged={logged} logout={logout}/>
                         <div className="AppContent">
-                            <Home/>
+                            <Home logged={logged}/>
                         </div>
                         {/* <Footer/> */}
                         <Popup/>
                     </div>}/>
-                    <Route path={'/login'} element={<Login login={login} tab={'login'}/>}/>
-                    <Route path={'/register/:token'} element={<Login login={login} tab={'register'}/>}/>
+                    {!logged && <>
+                        <Route path={'/login'} element={<Login login={login} tab={'login'}/>}/>
+                        <Route path={'/register/:token'} element={<Login login={login} tab={'register'}/>}/>
+                    </>}
             </Routes>
         </BrowserRouter>
     )

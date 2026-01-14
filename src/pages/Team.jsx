@@ -18,6 +18,7 @@ import EditIcon from "./../assets/edit-white.svg"
 import Request from "../utils/Request"
 import Body from "../components/Body"
 import PopupContext from '../contexts/PopupContext'
+import { useNavigate } from "react-router-dom"
 
 const TeamDetails = (props) => {
     const intl = useIntl()
@@ -78,6 +79,8 @@ const EditPopup = (props) =>{
 
 const Team = (props) => {
     const intl = useIntl()
+
+    const navigate = useNavigate()
 
     const [name, setName] = useState("")
     const [menuOpened, setMenuOpened] = useState(false)
@@ -162,38 +165,45 @@ const Team = (props) => {
         console.log("random")
     }
 
-    const handleSaveClicked = (_name = null) => {
+    const handleSaveClicked = (e, _name = null) => {
         let userId = window.localStorage.getItem('userId')
         const nameTmp = _name || name
-        if(selectedTeam){
-            Request.put('/team', {
-                _id:selectedTeam,
-                name:nameTmp,
-                pokemonIds:props.team.map(t => t.id),
-                user:{
-                    _id:userId,
-                }
-            }).then(res => {
-                fetchTeams()
-                resetTeam()
-            }).catch(err => {
-                console.log(err)
-                return
-            })
+        if(!props.logged){
+            console.log(nameTmp)
+            window.localStorage.setItem("current_team_name", nameTmp)
+            window.localStorage.setItem("current_team_pokemons", JSON.stringify(props.team.map(t => t.id)))
+            navigate('/login')
         }else{
-            Request.post('/team', {
-                name:nameTmp,
-                pokemonIds:props.team.map(t => t.id),
-                user:{
-                    _id:userId,
-                }
-            }).then(res => {
-                fetchTeams()
-                resetTeam()
-            }).catch(err => {
-                console.log(err)
-                return
-            })
+            if(selectedTeam){
+                Request.put('/team', {
+                    _id:selectedTeam,
+                    name:nameTmp,
+                    pokemonIds:props.team.map(t => t.id),
+                    user:{
+                        _id:userId,
+                    }
+                }).then(res => {
+                    fetchTeams()
+                    resetTeam()
+                }).catch(err => {
+                    console.log(err)
+                    return
+                })
+            }else{
+                Request.post('/team', {
+                    name:nameTmp,
+                    pokemonIds:props.team.map(t => t.id),
+                    user:{
+                        _id:userId,
+                    }
+                }).then(res => {
+                    fetchTeams()
+                    resetTeam()
+                }).catch(err => {
+                    console.log(err)
+                    return
+                })
+            }
         }
     }
 
@@ -215,7 +225,7 @@ const Team = (props) => {
     const handleChangeName = () => {
         openPopup(<EditPopup
             title={"choose-name"}
-            save={(str)=>{handleSaveClicked(str);closePopup()}}
+            save={(str)=>{handleSaveClicked(null, str);closePopup()}}
             close={closePopup}
             value={name}
         />)
@@ -235,7 +245,12 @@ const Team = (props) => {
             <div className={"TeamOpacity" + (menuOpened ? " opened" : "")} onClick={()=>setMenuOpened(false)}/>
             <div className={"Team" + (menuOpened ? " opened" : "")}>
                 <div className="TeamContainer secondary">
-                    <div className="TeamContent">
+                    {!props.logged ? 
+                    <div className="NoLogged">
+                        <Body>{intl.formatMessage({id:"no-logged"})}</Body>
+                        <Button label={'login'} onClick={()=>{navigate('/login')}}/>
+                    </div>
+                    :<div className="TeamContent">
                         <div className="TeamHeader">
                             <div className="Title">
                                 <Heading size={'h6'}>{intl.formatMessage({id:"my-teams"})}</Heading>
@@ -266,6 +281,7 @@ const Team = (props) => {
                             ))}
                         </div>
                     </div>
+                    }
                 </div>
                 <div className="TeamContainer">
                     <div className="TeamContent">
@@ -290,13 +306,13 @@ const Team = (props) => {
                     </div>
                     <div className="TeamActions">
                         <Button type={'secondary'} icon={SwitchIcon} size={'full'} label={'create-random-team'} onClick={hanldeRandomClicked}/>
-                        <Button type={'secondary'} icon={AnalyseIcon} disabled={teams.length === 0} size={'full'} label={'show-analyse-team'} onClick={()=>handleAnalyseClicked(props.team)}/>
+                        <Button type={'secondary'} icon={AnalyseIcon} disabled={props.team.length === 0} size={'full'} label={'show-analyse-team'} onClick={()=>handleAnalyseClicked(props.team)}/>
                         <Button type={'secondary'} icon={SaveIcon} disabled={props.team.length === 0 || name === ""} size={'full'} label={'save-team'} onClick={handleSaveClicked}/>
                         <Button type={'secondary'} icon={ExtendIcon} size={'full'} label={'view-teams'} onClick={handleMenuStateChanged}/>
                     </div>
                     <div className="TeamActionsMobile">
                         <Button type={'secondary'} size={'full'} icon={SwitchIcon} onClick={hanldeRandomClicked}/>
-                        <Button type={'secondary'} disabled={teams.length === 0} size={'full'} icon={AnalyseIcon} onClick={()=>handleAnalyseClicked(props.team)}/>
+                        <Button type={'secondary'} disabled={props.team.length === 0} size={'full'} icon={AnalyseIcon} onClick={()=>handleAnalyseClicked(props.team)}/>
                         <Button type={'secondary'} disabled={props.team.length === 0} size={'full'} icon={SaveIcon} onClick={handleChangeName}/>
                         <Button type={'secondary'} size={'full'} icon={ExtendIcon} onClick={handleMenuStateChanged}/>
                     </div>

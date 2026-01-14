@@ -14,6 +14,7 @@ export const fr = {
     "login-error":"Identifiant ou mot de passe incorrecte.",
     "loading-data":"Chargement des données",
     "search-pokemon":"Rechercher un Pokémon",
+    "no-logged":"Vous n'êtes pas connecté",
 
     //POKEMONS
 
