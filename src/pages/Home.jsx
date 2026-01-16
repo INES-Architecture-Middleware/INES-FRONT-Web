@@ -12,7 +12,6 @@ import Team from "./Team";
 import { useNavigate, useParams } from "react-router-dom";
 
 const PokemonList = (props) => {
-
     if(!props.data || props.data.length === 0) return null
 
     return (

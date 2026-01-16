@@ -162,7 +162,11 @@ const Team = (props) => {
     }
 
     const hanldeRandomClicked = () => {
-        console.log("random")
+        Request.get("/pokemon/random").then((res) =>  {
+            props.editTeam(res)
+        }).catch(err => {
+            console.log(err)
+        })
     }
 
     const handleSaveClicked = (e, _name = null) => {
