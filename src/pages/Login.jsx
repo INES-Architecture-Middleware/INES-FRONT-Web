@@ -46,11 +46,11 @@ const Login = (props) => {
                     props.login(res.token, res.user._id, username)
                     navigate('/')
                 }else{
-                    setError('login-error')
+                    setErrors(['login-error'])
                 }
             }).catch(err => {
                 console.log(err)
-                setError('login-error')
+                setErrors(['login-error'])
                 return
             })
         }
