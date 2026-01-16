@@ -55,4 +55,11 @@ const calculateAveStats = (stats) => {
     return (sum/count).toFixed(2)
 }
 
-export {colorType, colorResistance, fourDigitsString, calculateSumStats, calculateAveStats}
+const normalizeString = (str) => {
+  return str
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase();
+}
+
+export {colorType, colorResistance, fourDigitsString, calculateSumStats, calculateAveStats, normalizeString}

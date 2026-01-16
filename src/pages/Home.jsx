@@ -10,6 +10,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import PopupContext from "../contexts/PopupContext";
 import Team from "./Team";
 import { useNavigate, useParams } from "react-router-dom";
+import { normalizeString } from "../utils/helpers";
 
 const PokemonList = (props) => {
     if(!props.data || props.data.length === 0) return null
@@ -69,7 +70,7 @@ const Home = (props) => {
         clearTimeout(inputTimeout.current)
         setFetching(true)
         inputTimeout.current = setTimeout(()=>{
-            fetchPokemons({name:search}, true)
+            fetchPokemons({name:normalizeString(search)}, true)
         }, 300)
     }, [search])
 
@@ -144,7 +145,7 @@ const Home = (props) => {
                     {!data || fetching ? 
                         <Loader/>: 
                         <PokemonList 
-                            fetch={()=>{fetchPokemons({name:search})}} 
+                            fetch={()=>{fetchPokemons({name:normalizeString(search)})}} 
                             data={data} 
                             dataLength={dataLength}
                             handleItemClick={handlePokemonClick}

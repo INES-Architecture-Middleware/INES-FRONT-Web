@@ -5,7 +5,7 @@ import "./Team.scss"
 import { useIntl } from "react-intl"
 import Button from "../components/Button"
 import Pokeball from "../components/Pokeball"
-import { colorType } from "../utils/helpers"
+import { colorType, normalizeString } from "../utils/helpers"
 import PlusIcon from "./../assets/plus-white.svg"
 import RenameIcon from "./../assets/rename_white.svg"
 import SwitchIcon from "./../assets/switch_white.svg"
@@ -139,7 +139,7 @@ const Team = (props) => {
     }, [])
 
     useEffect(()=>{
-        setFilteredTeam(teams.filter(t => search !== "" ? t.name.toLowerCase().includes(search.toLowerCase()) : t))
+        setFilteredTeam(teams.filter(t => search !== "" ? normalizeString(t.name).includes(normalizeString(search)) : t))
     }, [teams, search])
 
     const handleResize = (e) => {
