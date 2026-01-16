@@ -7,24 +7,9 @@ import Button from './Button';
 import { calculateAveStats, calculateSumStats, colorResistance, colorType, fourDigitsString } from '../utils/helpers';
 import Body from './Body';
 import Type from './Type';
-import {calculerResistance, types} from '../data/types.js';
-
-const TypeCase = (props) => {
-    const intl = useIntl()
-    
-    const resistance = calculerResistance(props.types.map(f => f.en?.toLowerCase()), props.type)
-
-    return (
-        <div className="TypeCase">
-            <div className="TypeHeader" style={{borderColor:colorType(props.type)}}>
-                <Body size={'small'}>{intl.formatMessage({id:props.type})}</Body>
-            </div>
-            <div className="TypeContent">
-                <Body color={colorResistance(resistance)}>{intl.formatMessage({id:'r-'+resistance})}</Body>
-            </div>
-        </div>
-    )
-}
+import {types} from '../data/types.js';
+import TypeCase from './TypeCase.jsx';
+import FullPopupContent from './FullPopupContent.jsx';
 
 const PokemonPopup = (props) => {
     const intl = useIntl(null)
@@ -40,19 +25,12 @@ const PokemonPopup = (props) => {
 
     return (
         <div className="PokemonPopup">
-            <div className="PokemonPopupContainer">
-            <div className="PokemonPopupScroll">
-                <div className="PokemonPopupHeader">
-                    <div className="PopupTitle">                    
-                        <Heading size={'h3'}>{fourDigitsString(props.pokemon.id)}</Heading>
-                        <div className="divider"/>
-                        <div className="TitleNames">
-                            <Heading size={'h4'}>{props.pokemon.names['fr']}</Heading>
-                            <Body secondary weight={'light'}>{props.pokemon.names['en']}</Body>
-                        </div>
-                    </div>
-                    <Button size={'large'} type={'tercery'} icon={CrossWhiteIcon} onClick={closePopup} />
-                </div>
+            <FullPopupContent
+                title={props.pokemon.names['fr']}
+                subTitle={props.pokemon.names['en']}
+                id={fourDigitsString(props.pokemon.id)}
+                closePopup={closePopup}
+            >
                 <div className="PokemonPopupContent">
                     <div className="PokemonBand">
                         <div className="PokemonHeader">
@@ -119,7 +97,7 @@ const PokemonPopup = (props) => {
                             </div>
                             <div className="TypesContainer">
                                 {Object.keys(types).map((type, idType) => (
-                                    <TypeCase key={'table-case-' + idType} type={type} types={props.pokemon.types} properties={types[type]}/>
+                                    <TypeCase key={'table-case-' + idType} type={type} types={props.pokemon.types}/>
                                 ))}
                             </div>
                         </div>
@@ -155,8 +133,7 @@ const PokemonPopup = (props) => {
                         </div>
                     </div>
                 </div>
-            </div>
-            </div>
+            </FullPopupContent>
         </div>
     )
 }

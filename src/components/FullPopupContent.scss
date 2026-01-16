@@ -1,0 +1,70 @@
+.FullPopup{
+    width: 100dvw;
+    height: 100dvh;
+    display: flex;
+    justify-content: center;
+    overflow-y: auto;
+    background-color: var(--background);
+
+    .FullPopupContainer{
+        width: 100%;
+        max-width: 1600px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .FullPopupScroll{
+        padding: 20px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .FullPopupHeader{
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        padding: 15px 30px;
+        align-items: center;
+        background-color: var(--components);
+        border-radius: 5px;
+        height: 100px;
+
+        .PopupTitle{
+            display: flex;
+            gap: 25px;
+            height: 100%;
+            align-items: center;
+
+            .divider{
+                width: 2px;
+                flex-shrink: 0;
+                background-color: var(--borders);
+                height: 100%;
+                border-radius: 15px;
+            }
+        }
+    }
+
+    @media screen and (max-width : 1024px){
+        .FullPopupHeader{
+            height: 80px;
+            padding: 15px;
+
+            .PopupTitle{
+                gap: 15px;
+            }
+        }
+    }
+
+     @media screen and (max-width : 650px){
+        .FullPopupScroll{
+            padding: 10px;
+        }
+        
+        .FullPopupHeader{
+            height: 65px;
+        }
+    }
+}

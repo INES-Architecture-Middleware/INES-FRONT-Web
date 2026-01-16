@@ -1,0 +1,28 @@
+.TypeBar{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+
+    .TypeBarContent{
+        width: 65px;
+        height: 55px;
+        display: flex;
+        align-items: center;
+        gap:5px;
+
+        .Bar{
+            flex-grow: 1;
+            border-radius: 20px;
+            height: 100%;
+            background-color: var(--components);
+
+            &.good{
+                background-color: var(--primary);
+            }
+
+            &.bad{
+                background-color: var(--red100);
+            }
+        }
+    }
+}

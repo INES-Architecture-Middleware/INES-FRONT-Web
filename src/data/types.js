@@ -91,14 +91,14 @@ const types = {
     }
 };
 
-function calculerResistance(typesPokemon, typeAttaque) {
+function calculateResistances(typesPokemon, typeAttack) {
     let resistance = 1;
     typesPokemon.forEach(type => {
-        if (types[type].immunites.includes(typeAttaque)) {
+        if (types[type].immunites.includes(typeAttack)) {
             resistance = 0;
-        } else if (types[type].resistances.includes(typeAttaque)) {
+        } else if (types[type].resistances.includes(typeAttack)) {
             resistance *= 0.5;
-        } else if (types[type].faiblesses.includes(typeAttaque)) {
+        } else if (types[type].faiblesses.includes(typeAttack)) {
             resistance *= 2;
         }
     });
@@ -106,4 +106,38 @@ function calculerResistance(typesPokemon, typeAttaque) {
     return resistance;
 }
 
-export {types, calculerResistance}
+const calculateDefenses = (typesPokemon, typeAttack) => {
+    let defense = 0
+    let immunized = false
+    typesPokemon.forEach(type => {
+        if(!immunized){
+            if (types[type].immunites.includes(typeAttack)) {
+                immunized = true
+            } else if (types[type].resistances.includes(typeAttack)) {
+                defense += 1;
+            } else if (types[type].faiblesses.includes(typeAttack)) {
+                defense -= 1;
+            }
+        }
+    });
+    
+    return immunized ? 1 : defense 
+}
+
+const isCovered = (typesPokemon, typeDefense) => {
+    let weakness = 0
+    let immunized = false
+    typesPokemon.forEach(type => {
+        if(!immunized){
+            if (types[typeDefense].immunites.includes(type)) {
+                immunized = true
+            } else if (types[typeDefense].faiblesses.includes(type)) {
+                weakness += 1;
+            }
+        }
+    });
+    
+    return (!immunized && weakness > 0) 
+}
+
+export {types, calculateResistances, calculateDefenses, isCovered}

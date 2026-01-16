@@ -91,6 +91,13 @@ export const fr = {
     "editing":"En cours d'édition",
     "choose-name":"Choisir le nom de votre team",
 
+    // ANALySE
+
+    "team-analyse":"Analyse de la team",
+    "creating-team":"Team en cours de création",
+    "team-defenses":"Défenses de la team",
+    "team-coverage":"Couvertures de la team",
+
     // COMMONS
 
     "login":"Se connecter",

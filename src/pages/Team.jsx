@@ -19,6 +19,7 @@ import Request from "../utils/Request"
 import Body from "../components/Body"
 import PopupContext from '../contexts/PopupContext'
 import { useNavigate } from "react-router-dom"
+import TeamAnalyse from "../components/TeamAnalyse"
 
 const TeamDetails = (props) => {
     const intl = useIntl()
@@ -158,7 +159,7 @@ const Team = (props) => {
     }
 
     const handleAnalyseClicked = (team) => {
-        console.log("analysed")
+        openPopup(<TeamAnalyse {...team} name={team.name || "creating-team"} closePopup={closePopup}/>, true)
     }
 
     const hanldeRandomClicked = () => {
@@ -173,7 +174,6 @@ const Team = (props) => {
         let userId = window.localStorage.getItem('userId')
         const nameTmp = _name || name
         if(!props.logged){
-            console.log(nameTmp)
             window.localStorage.setItem("current_team_name", nameTmp)
             window.localStorage.setItem("current_team_pokemons", JSON.stringify(props.team.map(t => t.id)))
             navigate('/login')
@@ -310,13 +310,13 @@ const Team = (props) => {
                     </div>
                     <div className="TeamActions">
                         <Button type={'secondary'} icon={SwitchIcon} size={'full'} label={'create-random-team'} onClick={hanldeRandomClicked}/>
-                        <Button type={'secondary'} icon={AnalyseIcon} disabled={props.team.length === 0} size={'full'} label={'show-analyse-team'} onClick={()=>handleAnalyseClicked(props.team)}/>
+                        <Button type={'secondary'} icon={AnalyseIcon} disabled={props.team.length === 0} size={'full'} label={'show-analyse-team'} onClick={()=>handleAnalyseClicked({name:name, pokemons_id:props.team})}/>
                         <Button type={'secondary'} icon={SaveIcon} disabled={props.team.length === 0 || name === ""} size={'full'} label={'save-team'} onClick={handleSaveClicked}/>
                         <Button type={'secondary'} icon={ExtendIcon} size={'full'} label={'view-teams'} onClick={handleMenuStateChanged}/>
                     </div>
                     <div className="TeamActionsMobile">
                         <Button type={'secondary'} size={'full'} icon={SwitchIcon} onClick={hanldeRandomClicked}/>
-                        <Button type={'secondary'} disabled={props.team.length === 0} size={'full'} icon={AnalyseIcon} onClick={()=>handleAnalyseClicked(props.team)}/>
+                        <Button type={'secondary'} disabled={props.team.length === 0} size={'full'} icon={AnalyseIcon} onClick={()=>handleAnalyseClicked({name:name, pokemons_id:props.team})}/>
                         <Button type={'secondary'} disabled={props.team.length === 0} size={'full'} icon={SaveIcon} onClick={handleChangeName}/>
                         <Button type={'secondary'} size={'full'} icon={ExtendIcon} onClick={handleMenuStateChanged}/>
                     </div>
