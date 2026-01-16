@@ -6,7 +6,7 @@ export default defineConfig({
   base: '/pokemon-team-planner/',
   plugins: [react(), svgr()],
   build: {
-    outDir: 'build'
+    outDir: 'dist'
   },
   server: {
     port:3125,
