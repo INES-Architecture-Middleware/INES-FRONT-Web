@@ -41,7 +41,7 @@ const Login = (props) => {
             props.login &&
             token
         ){
-            Request.post('/register', {username:username, password:password, confirmPassword:confirmPassword, regiterToken:token}).then((res) => {
+            Request.post('/register', {username:username, password:password, confirmPassword:confirmPassword, registerToken:token}).then((res) => {
                 if(res){
                     props.login(res.token, res.user._id, username)
                     navigate('/')
